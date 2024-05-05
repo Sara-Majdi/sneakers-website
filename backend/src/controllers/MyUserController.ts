@@ -24,6 +24,36 @@ const createCurrentUser = async (req: Request, res: Response) => {
     }
 };
 
+/*  */
+const updateCurrentUser = async (req: Request, res: Response) => {
+    try {
+        const { name, addressLine1, country, city } = req.body;
+        /* find user by ID in db */
+        const user = await User.findById(req.userId);
+
+        /* if user not found, return error */
+        if(!user){
+            return res.status(400).json({message: "User not found"});
+        }
+
+        /* user properties */
+        user.name = name;
+        user.addressLine1 = addressLine1;
+        user.city = city;
+        user.country = country;
+
+        await user.save();
+
+        res.send(user);
+
+    } catch (error) {
+        console.log(error);
+        /* provide a general error message to avoid hacker specifically knowing what causes the error */
+        res.status(500).json({message: "Error updating user"})
+
+    }
+}
+
 export default {
     createCurrentUser,
 };

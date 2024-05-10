@@ -16,7 +16,7 @@ export const useCreateMyUser = () => {
     /* fetch request, that accepts 'CreateUserRequest' */
     const createMyUserRequest = async (user: CreateUserRequest) => {
         const accessToken = await getAccessTokenSilently();
-        const response = await fetch (`${API_BASE_URL}/api/my/user`,{
+        const response = await fetch(`${API_BASE_URL}/api/my/user`,{
             method: "POST",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -46,4 +46,48 @@ export const useCreateMyUser = () => {
         isError,
         isSuccess,
     };
+};
+
+/* there is no email, as we don't want user to fill in email */
+type UpdateMyUserRequest = {
+    name: string;
+    addressLine1: string;
+    city: string;
+    country: string;
+};
+
+export const useUpdateMyUser = () => {
+    const { getAccessTokenSilently } = useAuth0();
+
+    const updateMyUserRequest = async (formData: UpdateMyUserRequest) => {
+        /* it will go to the Auth0, and get the accessToken */
+        const accessToken = await getAccessTokenSilently();
+        console.log(formData)
+        const response = await fetch(`${API_BASE_URL}/api/my/user`,{
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        })
+
+        console.log(response.json())
+        
+        
+        console.log('hi mesh')
+        return response.json();
+
+    };
+
+    const { 
+        mutateAsync: updateUser, 
+        isLoading, 
+        isSuccess, 
+        isError, 
+        error, 
+        reset, 
+    } = useMutation(updateMyUserRequest);
+
+    return { updateUser, isLoading};
 };

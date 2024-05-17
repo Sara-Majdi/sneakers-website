@@ -1,6 +1,20 @@
 import { Request, Response} from "express";
 import User from "../models/user";
 
+const getCurrentUser = async (req: Request, res: Response) => {
+    try{
+        const currentUser = await User.findOne({_id:req.userId});
+        if (!currentUser){
+            return res.status(404).json({message: "User not found"});
+        }
+         
+      res.json(currentUser);    
+    } catch(error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something went wrong"});
+    }
+};
+
 const createCurrentUser = async (req: Request, res: Response) => {
 
     try {
@@ -43,21 +57,18 @@ const updateCurrentUser = async (req: Request, res: Response) => {
             return res.status(400).json({message: "User not found"});
         }
 
-        console.log('hi 1')
 
-        // if user found 
+        // if user found, add all the details given in the database
         /* user properties */
         user.name = name;
         user.addressLine1 = addressLine1;
         user.city = city;
         user.country = country;
 
-        console.log('hi 2')
-
+        // Save user details in the database
         await user.save();
 
-        console.log('hi 3')
-
+        // Send response to the client side
         res.send(user);
 
     } catch (error) {
@@ -69,6 +80,7 @@ const updateCurrentUser = async (req: Request, res: Response) => {
 }
 
 export default {
+    getCurrentUser,
     createCurrentUser,
     updateCurrentUser,
 };

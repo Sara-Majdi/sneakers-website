@@ -2,7 +2,9 @@ import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { User } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -18,18 +20,24 @@ const formSchema = z.object({
 export type UserFormData = z.infer<typeof formSchema>;
 
 type Props = {
+    currentUser: User;
     /* allowing us to do API stuff at the page level */
     onSave: (userProfileData: UserFormData) => void;
     isLoading: boolean;
-}
+};
 
-const UserProfileForm = ({ onSave, isLoading }: Props) => {
+const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
     /* imported the useForm from react-hook-form, 
     we telling that the type of our form is "UserFormData" which has all the fields */
     const form = useForm<UserFormData>({
         /* handles validation of formSchema*/
         resolver: zodResolver(formSchema),
+        defaultValues: currentUser,
     });
+
+    useEffect(() =>{
+        form.reset(currentUser);
+    }, [currentUser, form]);
 
     return(
         /*passing all the stuff in form var into the shadcn form */

@@ -24,3 +24,14 @@ export const validateMyUserRequest = [
     body("country").isString().notEmpty().withMessage("Country must be a string"),
     handleValidationErrors,
 ];
+
+export const validateMyShopRequest = [
+    body("shopName").notEmpty().withMessage("Shop name is required"),
+    body("color").notEmpty().withMessage("Color name is required"),
+    body("price").isFloat({ min: 0 }).withMessage("Price name is required and must be a positive number"),
+    body("category").isArray().withMessage("Category must be an array").not().isEmpty().withMessage("Category array cannot be empty"),
+    body("sizeStock").isArray().withMessage("Category must be an array"),
+    body("sizeStock.*.size").notEmpty().withMessage("Size name is required"),
+    body("sizeStock.*.stock").notEmpty().withMessage("Stock name is required"),
+    handleValidationErrors,
+];

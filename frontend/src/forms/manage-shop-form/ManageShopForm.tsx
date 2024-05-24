@@ -6,6 +6,11 @@ import DetailsSection from "./DetailsSection";
 import { Separator } from "@radix-ui/react-separator";
 import CategorySection from "./CategorySection";
 import SizeSection from "./SizeSection";
+import ImageSection from "./ImageSection";
+import LoadingButton from "@/components/LoadingButton";
+import { Button } from "@/components/ui/button";
+import { Shop } from "@/types";
+import { useEffect } from "react";
 
 const formSchema = z.object({
     shopName: z.string({
@@ -30,15 +35,16 @@ const formSchema = z.object({
     imageFile: z.instanceof(File, { message: "image is required" }),
 });
 
-type shopFormData = z.infer<typeof formSchema>
+type ShopFormData = z.infer<typeof formSchema>
 
 type Props = {
+    shop?: Shop;
     onSave: (shopFormData: FormData) => void;
     isLoading: boolean;
 }
 
-const ManageShopForm = ({ onSave, isLoading }: Props) => {
-    const form = useForm<shopFormData>({
+const ManageShopForm = ({ onSave, isLoading, shop }: Props) => {
+    const form = useForm<ShopFormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             category: [],
@@ -46,9 +52,49 @@ const ManageShopForm = ({ onSave, isLoading }: Props) => {
         },
     });
 
-    const onSubmit = (formDataJson: shopFormData) => {
+    useEffect(() =>{
+        if(!shop){
+            return;
+        }
+
+        const priceFormatted = parseInt(
+            (shop.price / 100).toFixed(2)//delete: dont need to 2dc decimal point
+        );
+
+        const sizeStockFormatted = shop.sizeStock.map((item)=> ({
+            ...item,
+            stock: parseInt((item.stock / 100).toFixed(2)),
+        }));
+    }, []);
+
+    const onSubmit = (formDataJson: ShopFormData) => {
         // TODO - convert formDataJson to a new FormData object
-    }
+        const formData= new FormData();
+
+        formData.append("shopName", formDataJson.shopName);
+        formData.append("color", formDataJson.color);
+
+        formData.append(
+            "price", 
+            (formDataJson.price * 100).toString()
+        );
+
+        formDataJson.category.forEach((category, index) => {
+            formData.append(`category[${index}]`, category);
+        });
+
+        formDataJson.sizeStock.forEach((sizeStock, index) => {
+            formData.append(`sizeStock[${index}][size]`, sizeStock.size)
+            formData.append(
+                `sizeStock[${index}][stock]`, 
+                (sizeStock.stock * 100).toString()
+            );
+        });
+
+        formData.append(`imageFile`, formDataJson.imageFile);
+
+        onSave(formData);
+    };
 
     return(
         <Form {...form}>
@@ -62,6 +108,8 @@ const ManageShopForm = ({ onSave, isLoading }: Props) => {
                 <Separator/>
                 <SizeSection/>
                 <Separator/>
+                <ImageSection/>
+                {isLoading ? <LoadingButton/> : <Button type="submit">Submit</Button> }
             </form>
         </Form>
     )

@@ -11,7 +11,7 @@ const CategorySection = () => {
             <div>
                 <h2 className="text-2xl font-bold">Category</h2>
                 <FormDescription>
-                    Select the category of your product
+                    Select the category of your shop
                 </FormDescription>
             </div>
             <FormField 

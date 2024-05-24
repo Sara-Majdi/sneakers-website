@@ -14,6 +14,9 @@ const upload = multer({
     },
 });
 
+//GET /api/my/shop
+router.get("/", jwtCheck, jwtParse, MyShopController.getMyShop)
+
 // /api/my/shop
 router.post(
     "/", 

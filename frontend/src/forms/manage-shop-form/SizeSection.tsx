@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { FormDescription, FormField, FormItem } from "@/components/ui/form";
 import { useFieldArray, useFormContext } from "react-hook-form"
-import SizeItemInput from "./SizeItemInput";
+import SizeStockInput from "./SizeStockInput";
+
 
 const SizeSection = () => {
     const { control } = useFormContext();
 
     const { fields, append, remove } = useFieldArray({
         control,
-        name: "sizeItems",
+        name: "sizeStock",
     });
 
     return (
@@ -19,18 +20,21 @@ const SizeSection = () => {
                     Create available size and update the stock
                 </FormDescription>
             </div>
-                <FormField control={control} name="sizeItems" render={() => (
+                <FormField 
+                control={control} 
+                name="sizeStock" 
+                render={() => (
                     <FormItem className="flex flex-col gap-2">
                         {fields.map((_, index) => (
-                            <SizeItemInput 
+                            <SizeStockInput 
                                 index={index}
-                                removeSizeItem={() => remove(index)}/>
+                                removeSizeStock={() => remove(index)}/>
                         ))}
                     </FormItem>
                 )}
                 />
                 {/* when button is pressed, it will add blank fields at the bottom, user will be able to populate as they wish*/}
-                <Button type="button" onClick={() => append({ name: "", stock: ""})}>
+                <Button type="button" onClick={() => append({ size: "", stock: ""})}>
                     Add Sizes
                 </Button>
         </div>

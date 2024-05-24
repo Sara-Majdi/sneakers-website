@@ -1,5 +1,5 @@
 import { useGetMyUser, useUpdateMyUser } from "@/api/MyUserApi";
-import UserProfileForm from "@/forms/user-profile-form/UserProfileForm";
+import UserProfileForm from "@/forms/user-profile-form/UserShopForm";
 
 const UserProfilePage = () => {
     const { currentUser, isLoading: isGetLoading} = useGetMyUser();

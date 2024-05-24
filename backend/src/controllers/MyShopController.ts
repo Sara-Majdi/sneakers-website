@@ -3,6 +3,20 @@ import Shop from "../models/shop";
 import cloudinary from "cloudinary";
 import mongoose from "mongoose";
 
+const getMyShop = async (req: Request, res: Response) => {
+    try {
+        const shop = await Shop.findOne({ user: req.userId });
+        if(!shop) {
+            return res.status(404).json({ message: "shop not found"});
+        }
+        res.json(shop);
+
+    } catch (error) {
+        console.log("error", error);
+        res.status(500).json({ message: "Error fetching shop"});
+    }
+}
+
 const createMyShop = async ( req: Request, res: Response) => {
     try {
         //finding 
@@ -33,5 +47,6 @@ const createMyShop = async ( req: Request, res: Response) => {
 };
 
 export default {
-    createMyShop
+    getMyShop,
+    createMyShop,
 }

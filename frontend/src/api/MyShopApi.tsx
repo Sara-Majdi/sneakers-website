@@ -73,3 +73,45 @@ export const useCreateMyShop = () => {
 
     return { createShop, isLoading };
 };
+
+export const useUpdateMyShop = () => {
+    const { getAccessTokenSilently } = useAuth0();
+
+    const updateShopRequest = async (
+        shopFormData: FormData
+    ): Promise<Shop> => {
+        const accessToken = await getAccessTokenSilently();
+
+        const response = await fetch(`${API_BASE_URL}/api/my/shop`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            body: shopFormData,
+        });
+
+        if(!response){
+            throw new Error("Failed to update shop");
+        }
+
+        return response.json();
+    };
+
+    const {
+        mutate: updateShop,
+        isLoading,
+        error,
+        isSuccess,
+    } = useMutation(updateShopRequest);
+
+    if(isSuccess) {
+        toast.success("Shop Updated");
+    }
+
+    if (error) {
+        toast.error("Unable to update shop");
+    }
+
+    return {
+        updateShop, isLoading };
+};

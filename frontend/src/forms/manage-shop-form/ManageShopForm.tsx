@@ -32,7 +32,12 @@ const formSchema = z.object({
             stock: z.coerce.number().min(1, "stock is required"),
         })
     ),
-    imageFile: z.instanceof(File, { message: "image is required" }),
+    imageUrl: z.string().optional(),
+    imageFile: z.instanceof(File, { message: "image is required" }).optional(),
+})
+.refine((data) => data.imageUrl || data.imageFile, {
+    message: "Either image URL or image File must be provided",
+    path: ["imageFile"],
 });
 
 type ShopFormData = z.infer<typeof formSchema>
@@ -65,7 +70,15 @@ const ManageShopForm = ({ onSave, isLoading, shop }: Props) => {
             ...item,
             stock: parseInt((item.stock / 100).toFixed(2)),
         }));
-    }, []);
+
+        const updatedShop = {
+            ...shop,
+            price: priceFormatted,
+            sizeStock: sizeStockFormatted,
+        };
+
+        form.reset(updatedShop);
+    }, [form, shop]);
 
     const onSubmit = (formDataJson: ShopFormData) => {
         // TODO - convert formDataJson to a new FormData object
@@ -91,8 +104,10 @@ const ManageShopForm = ({ onSave, isLoading, shop }: Props) => {
             );
         });
 
-        formData.append(`imageFile`, formDataJson.imageFile);
-
+        if (formDataJson.imageFile) {
+            formData.append(`imageFile`, formDataJson.imageFile);
+        }
+        
         onSave(formData);
     };
 

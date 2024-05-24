@@ -27,4 +27,13 @@ router.post(
     MyShopController.createMyShop
 );
 
+router.put(
+    "/", 
+    upload.single("imageFile"), 
+    validateMyShopRequest,
+    jwtCheck,
+    jwtParse,
+    MyShopController.updateMyShop
+);
+
 export default router;

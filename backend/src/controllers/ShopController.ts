@@ -1,6 +1,23 @@
 import { Request, Response } from "express";
 import Shop from "../models/shop";
 
+const getShop = async (req: Request, res: Response) => {
+    try {
+        const shopId = req.params.shopId;
+
+        const shop = await Shop.findById(shopId);
+        if (!shop) {
+            return res.status(404).json({ message: "shop not found "})
+        }
+
+        res.json(shop);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "something went wrong"})
+    }
+}
+
+
 const searchShop = async (req: Request, res:Response) => {
     try {
         const color = req.params.color;
@@ -80,5 +97,6 @@ const searchShop = async (req: Request, res:Response) => {
 };
 
 export default{
+    getShop,
     searchShop,
 }

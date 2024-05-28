@@ -6,6 +6,16 @@ import ShopController from "../controllers/ShopController";
 const router = express.Router();
 
 router.get(
+    "/:shopId", 
+    param("shopId")
+        .isString()
+        .trim()
+        .notEmpty()
+        .withMessage("ShopId parameter must be a valid string"),
+        ShopController.getShop
+);
+
+router.get(
     "/search/:color", 
     param("city")
         .isString()

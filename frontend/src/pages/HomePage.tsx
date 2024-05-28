@@ -1,17 +1,31 @@
 import landingImage from "../assets/landing.png"
 import appDownloadImage from "../assets/appDownload.png"
+import SearchBar, { SearchForm } from "@/components/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+
+    const navigate = useNavigate();
+    const handleSearchSubmit = (searchFormValues: SearchForm) => {
+        navigate({
+            pathname: `/search/${searchFormValues.searchQuery}`,
+        });
+    };
+
     return(
         /*adding flex box, elements in the page to be in col, add gap of 12 between elements*/
         <div className="flex flex-col gap-12">
             {/* white background, rounding at the edges, add shadow to outside div, padding to inside of div, align all content of card, 
             add spacing between elements, align text to center, add -(ve) margin to the top(pushes element up, creates overlapping effect)*/}
-            <div className="bg-white rounded-lg shadow-md py-8 flex flex-col gap-5 text-center -mt-16">
+            <div className="md:px-32 bg-white rounded-lg shadow-md py-8 flex flex-col gap-5 text-center -mt-16">
                 <h1 className="text-5xl font-bold tracking-tight text-orange-600">
                     Find your style today
                 </h1>
                 <span className="text-xl">Your sneaker destination starts here</span>
+                <SearchBar 
+                    placeHolder="Search by Color or Name" 
+                    onSubmit={handleSearchSubmit}
+                />
             </div>
             {/* create css grid(default: single col), medium screen: 2 cols, */}
             <div className="grid md:grid-cols-2 gap-2" >

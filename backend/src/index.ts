@@ -6,6 +6,7 @@ import myUserRoute from "./routes/MyUserRoute";
 import { v2 as cloudinary } from "cloudinary";
 import MyShopController from "./controllers/MyShopController";
 import myShopRoute from "./routes/MyShopRoute";
+import shopRoute from "./routes/ShopRoute"
 
 //Connecting to database
 mongoose
@@ -28,7 +29,7 @@ app.get("/health", async (req: Request, res: Response) => {
 
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/shop", myShopRoute);
-
+app.use("/api/shop", shopRoute);
 
 app.listen(7000, () => {
     console.log("server started on localhost:7000");

@@ -23,3 +23,12 @@ export type Shop = {
     sizeStock: SizeStock[];
     imageUrl: string;
 }
+
+export type ShopSearchResponse = {
+    data: Shop[];
+    pagination: {
+        total: number;
+        page: number;
+        pages: number;
+    };
+};

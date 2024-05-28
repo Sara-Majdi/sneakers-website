@@ -6,6 +6,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import ManageShopPage from "./pages/ManageShopPage";
 import SearchPage from "./pages/SearchPage";
+import DetailPage from "./pages/DetailPage";
 
 const AppRoutes = () => {
     return (
@@ -25,6 +26,18 @@ const AppRoutes = () => {
                     </Layout>
                 }
             />
+
+            <Route 
+                path="/detail/:shopId" 
+                element={
+                    <Layout showHero={false}>
+                        <DetailPage/>
+                    </Layout>
+                }
+            />
+
+
+
             <Route element={<ProtectedRoute/>}>
                 <Route 
                     path="/user-profile" 

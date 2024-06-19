@@ -21,8 +21,8 @@ const Hero = () => {
   }, [emblaApi])
 
   return (
-    <div className="embla1 overflow-hidden" ref={emblaRef}>
-      <div className="embla__container1 flex relative">
+    <div className="embla1 overflow-hidden relative" ref={emblaRef}>
+      <div className="embla__container1 flex">
         <div className="embla__slide1"><img src={banner3} className="w-full max-h-[600px] object-cover" /></div>
         <div className="embla__slide1"><img src={banner2} className="w-full max-h-[600px] object-cover" /></div>
         <div className="embla__slide1"><img src={banner5} className="w-full max-h-[600px] object-cover" /></div>
@@ -30,11 +30,11 @@ const Hero = () => {
         <div className="embla__slide1"><img src={banner1} className="w-full max-h-[600px] object-cover" /></div>
       </div>
 
-      <button className="embla__prev absolute bottom-72 left-5 bg-violet2 rounded-md p-2" onClick={scrollPrev}>
+      <button className="embla__prev absolute top-1/2 left-0 transform -translate-y-1/2 ml-4 bg-violet2 rounded-md p-2" onClick={scrollPrev}>
         <ChevronLeft className="text-white" />
       </button>
 
-      <button className="embla__prev absolute bottom-72 right-5 bg-violet2 rounded-md p-2" onClick={scrollNext}>
+      <button className="embla__prev absolute top-1/2 right-0 transform -translate-y-1/2 bg-violet2 mr-4 rounded-md p-2" onClick={scrollNext}>
         <ChevronRight className="text-white" />
       </button>
     </div>

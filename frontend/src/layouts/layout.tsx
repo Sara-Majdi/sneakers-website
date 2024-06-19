@@ -1,3 +1,4 @@
+import BannerCategory from "@/components/BannerCategory";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -23,6 +24,7 @@ const Layout = ({children, showHero = false}: Props) => {
             {/* If showHero == true, display Hero section*/}
             {showHero &&  <Hero />} 
             {showHero &&  <NewArrivals slides={SLIDES} options={OPTIONS} />} 
+            {showHero &&  <BannerCategory />} 
             <div className="container mx-auto flex-1 py-10">{children}</div>
             <Footer />
 

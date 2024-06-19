@@ -1,4 +1,6 @@
+import AsSeenOnSection from "@/components/AsSeenOnSection";
 import BannerCategory from "@/components/BannerCategory";
+import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -25,7 +27,9 @@ const Layout = ({children, showHero = false}: Props) => {
             {showHero &&  <Hero />} 
             {showHero &&  <NewArrivals slides={SLIDES} options={OPTIONS} />} 
             {showHero &&  <BannerCategory />} 
+            {/* {showHero &&  <AsSeenOnSection />}  */}
             <div className="container mx-auto flex-1 py-10">{children}</div>
+            {showHero &&  <FAQ />} 
             <Footer />
 
         </div>

@@ -22,6 +22,7 @@ const Hero = () => {
 
   return (
     <div className="embla1 overflow-hidden relative" ref={emblaRef}>
+      {/* Use Map in this div when Admin added images */}
       <div className="embla__container1 flex">
         <div className="embla__slide1"><img src={banner3} className="w-full max-h-[600px] object-cover" /></div>
         <div className="embla__slide1"><img src={banner2} className="w-full max-h-[600px] object-cover" /></div>

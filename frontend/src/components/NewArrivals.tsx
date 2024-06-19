@@ -49,7 +49,7 @@ const NewArrivals: React.FC<PropType> = (props) => {
   
     return (
         <div className='relative'>
-            <h1 className='text-center border py-6 font-inter text-5xl font-bold italic text-white bg-violet3'>New Arrivals</h1>
+            <h1 className='text-center border py-6 font-inter text-5xl font-bold italic text-white hover:text-black bg-violet3'>New Arrivals</h1>
             <div className="embla">
                 <div className="embla__viewport" ref={emblaRef}>
                     <div className="embla__container ">

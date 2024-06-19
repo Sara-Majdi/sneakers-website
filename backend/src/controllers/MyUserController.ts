@@ -36,7 +36,8 @@ const createCurrentUser = async (req: Request, res: Response) => {
 
         // If successfully created user, then return success respond message  
         res.status(201).json(newUser.toObject());
-        }catch (error) {
+    }
+    catch (error) {
         console.log(error);
         res.status(500).json({message: "Error creating user"});
     }

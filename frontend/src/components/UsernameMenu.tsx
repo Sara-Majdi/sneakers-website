@@ -4,10 +4,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import { Separator } from "./ui/separator"
 import { Button } from "./ui/button";
+import { useGetMyUser } from "@/api/MyUserApi";
 
 
 const UsernameMenu = () => {
-    const { user, logout } = useAuth0();
+    const { logout } = useAuth0();
+    const { currentUser} = useGetMyUser();
+    console.log(currentUser?.isAdmin)
 
     return(
 
@@ -20,23 +23,27 @@ const UsernameMenu = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
 
-                <DropdownMenuItem>
-                    <Link 
-                        to="/manage-shop" 
-                        className="font-bold hover:text-orange-500">
-                        Manage Shop
-                    </Link>
-                </DropdownMenuItem> 
+                {currentUser?.isAdmin &&
+                    <DropdownMenuItem>
+                        <Link  
+                            to="/manage-shop" 
+                            className="font-bold hover:text-violet3">
+                            Admin
+                        </Link>
+                    </DropdownMenuItem> 
 
+                }
+
+                
                 <DropdownMenuItem>
-                    <Link to="/user-profile" className="font-bold hover:text-orange-500">
+                    <Link to="/user-profile" className="font-bold hover:text-violet3">
                         User Profile
                     </Link>
                 </DropdownMenuItem> 
                 
                 <Separator/>
                 <DropdownMenuItem>
-                    <Button onClick={() => logout()} className="flex flex-1 font-bold bg-orange-500">
+                    <Button onClick={() => logout()} className="flex flex-1 font-bold bg-violet2">
                         Log Out
                     </Button>
                 </DropdownMenuItem>

@@ -43,6 +43,7 @@ export const useGetMyUser = () => {
 type CreateUserRequest = {
     auth0Id: string;
     email: string;
+    isAdmin: boolean;
 };
 
 /* hook 1: components use to call the endpoint*/

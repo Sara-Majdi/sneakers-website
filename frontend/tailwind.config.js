@@ -17,7 +17,13 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
       colors: {
+        violet: '#c402c4',
+        violet2: '#f03af0',
+        violet3: '#EE82EE',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

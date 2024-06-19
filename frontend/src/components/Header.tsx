@@ -9,10 +9,15 @@ const Header = () => {
             <div className="container mx-auto flex justify-between items-center">
                 <Link 
                     to="/" 
-                    className="text-3xl font-bold tracking-tight text-orange-500"
+                    className="text-2xl font-bold tracking-tight font-inter"
                 >
                     SoRa Sneakers
                 </Link>
+                <div className="flex gap-20 text-md font-medium font-inter mr-16">
+                    <p className="hover:text-violet">Men</p>
+                    <p className="hover:text-violet">Women</p>
+                    <p className="hover:text-violet">Kids</p>
+                </div>
                 <div className="md:hidden">
                     <MobileNav/>
                 </div>

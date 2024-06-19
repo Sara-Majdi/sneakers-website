@@ -13,7 +13,7 @@ const AppRoutes = () => {
         <Routes>
             <Route 
                 path="/" 
-                element={<Layout showHero>
+                element={<Layout homePage>
                     <HomePage/>
                 </Layout>}/>
 
@@ -21,7 +21,7 @@ const AppRoutes = () => {
             <Route 
                 path="/search/:color" 
                 element={
-                    <Layout showHero={false}>
+                    <Layout homePage={false}>
                         <SearchPage/>
                     </Layout>
                 }
@@ -30,7 +30,7 @@ const AppRoutes = () => {
             <Route 
                 path="/detail/:shopId" 
                 element={
-                    <Layout showHero={false}>
+                    <Layout homePage={false}>
                         <DetailPage/>
                     </Layout>
                 }
@@ -50,8 +50,8 @@ const AppRoutes = () => {
                 <Route 
                     path="/manage-shop" 
                     element={
-                        <Layout>
-                            <ManageShopPage/>
+                        <Layout adminPage={true} >
+                            <ManageShopPage />
                         </Layout>
                     }
                 />

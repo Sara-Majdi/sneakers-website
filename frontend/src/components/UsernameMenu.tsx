@@ -34,7 +34,6 @@ const UsernameMenu = () => {
 
                 }
 
-                
                 <DropdownMenuItem>
                     <Link to="/user-profile" className="font-bold hover:text-violet3">
                         User Profile

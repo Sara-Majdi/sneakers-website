@@ -1,4 +1,4 @@
-import { CircleUserRound } from "lucide-react";
+import { CircleUserRound, ShoppingCart } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
@@ -12,9 +12,11 @@ const UsernameMenu = () => {
     return(
 
         <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center px-3 font-bold hover:text-orange-500 gap-2">
-                <CircleUserRound className="text-orange-500"/>
-                 {user?.email}
+            <ShoppingCart className="width-21 w-8 h-8 hover:text-violet"/>
+            <DropdownMenuTrigger className="flex items-center px-3 font-bold hover:text-violet gap-4">
+                
+                <CircleUserRound className="width-21 w-8 h-8"/>
+                {/* {user?.email} */}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
 

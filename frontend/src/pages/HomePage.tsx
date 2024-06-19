@@ -14,7 +14,7 @@ const HomePage = () => {
 
     return(
         /*adding flex box, elements in the page to be in col, add gap of 12 between elements*/
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-12 mt-12">
             {/* white background, rounding at the edges, add shadow to outside div, padding to inside of div, align all content of card, 
             add spacing between elements, align text to center, add -(ve) margin to the top(pushes element up, creates overlapping effect)*/}
             <div className="md:px-32 bg-white rounded-lg shadow-md py-8 flex flex-col gap-5 text-center -mt-16">

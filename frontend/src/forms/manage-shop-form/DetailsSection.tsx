@@ -30,7 +30,7 @@ const DetailsSection = () => {
                         <FormControl>
                             <div className="flex-center h-[50px] w-full overflow-hidden rounded-md border bg-primary-50">
                                 <Input 
-                                placeholder="Example: Air Force 1's 1997" 
+                                placeholder="Example: Air Force 1's 1996" 
                                 className="border-none bg-primary-50 h-[50px] focus-visible:ring-offset-0 placeholder:text-grey-500 px-4 pb-2 text-[16px] border focus-visible:ring-transparent"
                                 {...field} 
                                 />

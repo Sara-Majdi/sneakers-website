@@ -84,7 +84,7 @@ const FAQ = () => {
             <AccordionItem value="item-10" className="">
                 <AccordionTrigger className="text-2xl">Do you accept returns?</AccordionTrigger>
                 <AccordionContent className="text-xl">
-                    We purchase our products for your specific needs. So returns may not be always possible. 
+                    Returns may not be always possible. 
                     However, under some specific conditions, we may accept returns. 
                     To request a return you can contact us by email at hello@sora.co. For more information, see our return & refund policy.
                 </AccordionContent>

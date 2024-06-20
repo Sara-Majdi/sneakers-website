@@ -124,11 +124,6 @@ const ManageShopForm = ({ onSave, isLoading, shop }: Props) => {
                     >
                         
                         <DetailsSection/>
-                        <Separator/>
-                        <CategorySection/>
-                        <Separator/>
-                        <SizeSection/>
-                        <Separator/>
                         <ImageSection/>
                         {isLoading ? <LoadingButton/> : <Button type="submit">Submit</Button> }
                     </form>

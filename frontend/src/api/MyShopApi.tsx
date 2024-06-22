@@ -42,13 +42,25 @@ export const useCreateMyShop = () => {
     ):Promise<Shop[]> => {
         const accessToken = await getAccessTokenSilently();
         console.log('Form Data successfully reach here, fix the below response function')
+        //console.log(productFormData)
+        console.log('Form data:', Array.from(productFormData.entries()));
         const response = await fetch(`${API_BASE_URL}/api/my/shop`,{
             method: "POST",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
+                // 'Content-Type': 'multipart/form-data',
             },
             body: productFormData,
         });
+
+        const statusCode = response.status
+        const serverResponse = await response.json()
+        const responseMessage = serverResponse.message
+        console.log(statusCode)
+
+        if (statusCode === 409){
+            toast.error(responseMessage);
+        }
 
         if(!response.ok){
             throw new Error("Failed to create shop");
@@ -65,11 +77,11 @@ export const useCreateMyShop = () => {
     } = useMutation(createMyShopRequest);
 
     if(isSuccess) {
-        toast.success("Product created!")
+        toast.success("Product Added Successfully!")
     }
     // Now It is sent here already but giving this error
     if(error) {
-        toast.error("Unable to create product");
+        toast.error('Unable to Add Product. Product with this Product Code Already Exist.');
     }
 
     return { createShop, isLoading };

@@ -47,7 +47,7 @@ interface MulterRequest extends Request {
 const photosMiddleware = multer({dest: 'uploads/'})
 // Adjust the path to the 'uploads' directory
 const uploadPath = path.resolve(__dirname, '..', 'uploads');
-console.log(uploadPath)
+// console.log(uploadPath)
 
 // Serve the files in the 'uploads' directory
 app.use('/uploads', express.static(uploadPath))

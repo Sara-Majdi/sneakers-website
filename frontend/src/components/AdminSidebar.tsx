@@ -9,7 +9,7 @@ export default function AdminSidebar() {
   const { logout } = useAuth0();
   const location = useLocation();
   const path = location.pathname
-  console.log(location.pathname); "/admin/addProducts"
+  //console.log(location.pathname); 
 
   // const { createShop, isLoading: isCreateLoading } = useCreateMyShop();
   // const { shop } = useGetMyShop();

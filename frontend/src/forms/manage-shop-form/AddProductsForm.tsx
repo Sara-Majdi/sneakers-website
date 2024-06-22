@@ -101,17 +101,17 @@ const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
         formData.append("productCode", formDataJson.productCode);
         formData.append(
             "productPrice", 
-            (formDataJson.productPrice * 100).toString()
+            (formDataJson.productPrice).toString()
         );
-        formData.append("productStock", (formDataJson.productStock * 100).toString());
+        formData.append("productStock", (formDataJson.productStock).toString());
         formData.append("productCategory", selectedCategory);
         productSizes.forEach((size, index) => {
-            formData.append(`Size[${index}]`, size);
+            formData.append(`productSizes[${index}]`, size);
         });
         formData.append("productDescription", formDataJson.productDescription);
         formData.append("productTags", productTag);
         addedPhotos.forEach((photo, index) => {
-            formData.append(`Photo[${index}]`, photo);
+            formData.append(`productImages[${index}]`, photo);
         });
 
         // formDataJson.category.forEach((category, index) => {
@@ -129,7 +129,7 @@ const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
         // if (formDataJson.imageFile) {
         //     formData.append(`imageFile`, formDataJson.imageFile);
         // }
-        console.log(formData)
+        console.log('Form data:', Array.from(formData.entries()));
         onSave(formData);
     };
 

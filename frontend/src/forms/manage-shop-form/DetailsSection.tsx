@@ -1,22 +1,31 @@
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import ProductImageSection from "./ProductImageSection";
 
 const DetailsSection = () => {
     const { control } = useFormContext();
 
     const [selectedCategory, setSelectedCategory] = useState<string>('men');
+    const [productTag, setProductTag] = useState<string>('');
 
     const handleCategoryClick = (category: string) => {
         setSelectedCategory(category);
     };
 
+    const handleTagClick = (tag: string) => {
+        setProductTag(tag);
+    };
+
     const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12]
     const menSizes = [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14]
     const kidsSizes = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7]
+    const offers = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95"]
+
 
     return (
         <div className="space-y-12">
@@ -238,8 +247,8 @@ const DetailsSection = () => {
                     render={({ field }) => (
                         <FormItem className="w-full">
                         <FormLabel className="text-xl">Product Description</FormLabel>
-                        <FormControl className="h-72">
-                            <div className="flex-center h-[50px] w-full overflow-hidden rounded-md  bg-primary-50">
+                        <FormControl className="h-[398px]">
+                            <div className="flex-center h-[398px] w-full overflow-hidden rounded-md  bg-primary-50">
                                 <Textarea 
                                     placeholder={
                                         `Example:${'\n'}Step into a classic. This AJ4 throws it back with full-grain and synthetic leathers and premium textiles. Lush colors and metallic pops update the icon, while original design elements-like floating eyestays and mesh-inspired accents-feel just as fresh as they did in '89.`
@@ -266,13 +275,40 @@ const DetailsSection = () => {
                         <FormItem className="w-full">
                         <FormLabel className="text-xl">Product Tags</FormLabel>
                         <FormControl>
-                            <div className="flex-center h-[50px] w-full overflow-hidden rounded-md border bg-primary-50">
-                                <Input
-                                type="number" 
-                                placeholder="369.90" 
-                                className="border-none bg-primary-50 h-[50px] focus-visible:ring-offset-0 placeholder:text-grey-500 px-4 pb-2 text-[16px] border focus-visible:ring-transparent"
-                                {...field} 
-                                />
+                            <div className="grid grid-cols-2 md:grid-cols-3  gap-2 ">
+                                <label className="flex items-center p-4 border rounded-md gap-2 h-[50px] bg-white">
+                                    <Checkbox
+                                        // onCheckedChange={field.onChange}
+                                        // checked={field.value} 
+                                        checked={productTag === 'newArrivals'}
+                                        onCheckedChange={() => handleTagClick('newArrivals')}
+                                        id="newArrivals" className="mr-2 h-5 w-5 border border-primary" />
+
+                                    <p className="font-inter font-medium">New Arrivals</p>
+                                </label>
+                                <label className="flex items-center p-4 border rounded-md gap-1 h-[50px] bg-white " >
+                                    <Checkbox
+                                        // onCheckedChange={field.onChange}
+                                        // checked={field.value}
+                                        checked={productTag === 'bestSelling'}
+                                        onCheckedChange={() => handleTagClick('bestSelling')}
+                                        id="bestSelling" className="mr-2 h-5 w-5 border border-primary" />
+
+                                    <p className="font-inter font-medium">Best Selling</p>
+                                </label>
+
+                                {offers.map(offer => (
+                                    <label className="flex items-center p-4 border rounded-md gap-2 h-[50px] bg-white ">
+                                        <Checkbox
+                                            // onCheckedChange={field.onChange}
+                                            // checked={field.value}
+                                            checked={productTag === offer}
+                                            onCheckedChange={() => handleTagClick(offer)}
+                                            id={`${offer}`} className="mr-2 h-5 w-5 border border-primary " />
+
+                                        <p className="font-inter font-medium">{`${offer}% OFF`}</p>
+                                    </label>
+                                ))}
                             </div>
                         
                         </FormControl>
@@ -284,34 +320,8 @@ const DetailsSection = () => {
 
             </div>
 
-
-            <div className="flex flex-col gap-6 md:flex-row">
-                
-
-                <FormField
-                    // control={form.control}
-                    name="productStock"
-                    render={({ field }) => (
-                        <FormItem className="w-full">
-                        <FormLabel className="text-xl">Product Stock</FormLabel>
-                        <FormControl>
-                            <div className="flex-center h-[50px] w-full overflow-hidden rounded-md border bg-primary-50">
-                                <Input
-                                type="number" 
-                                placeholder="50" 
-                                className="border-none bg-primary-50 h-[50px] focus-visible:ring-offset-0 placeholder:text-grey-500 px-4 pb-2 text-[16px] border focus-visible:ring-transparent"
-                                {...field} 
-                                />
-                            </div>
-                        
-                        </FormControl>
-                        
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-            </div>
+            <ProductImageSection />
+            
         </div>
     );
 };

@@ -6,6 +6,7 @@ import { jwtCheck, jwtParse } from "../middleware/auth";
 import { validateMyShopRequest } from "../middleware/validation";
 
 const router = express.Router();
+const app = express()
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -21,7 +22,7 @@ router.get("/", jwtCheck, jwtParse, MyShopController.getMyShop)
 // /api/my/shop
 router.post(
     "/", 
-    upload.single("imageFile"), 
+    upload.array("imageFile", 5), 
     validateMyShopRequest,
     jwtCheck,
     jwtParse,
@@ -30,11 +31,24 @@ router.post(
 
 router.put(
     "/", 
-    upload.single("imageFile"), 
+    upload.array("imageFile", 5), 
     validateMyShopRequest,
     jwtCheck,
     jwtParse,
     MyShopController.updateMyShop
 );
+
+const photosMiddleware = multer({dest: 'uploads/'});
+app.post('/', photosMiddleware.array("photos", 5), (req, res) => {
+    console.log(req.files)
+    res.json(req.files)
+})
+
+router.post('/', photosMiddleware.array("photos", 5), (req, res) => {
+    console.log(req.files)
+    res.json(req.files)
+})
+
+
 
 export default router;

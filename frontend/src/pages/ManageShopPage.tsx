@@ -10,9 +10,9 @@ const ManageShopPage = () => {
 
     return  (
         <ManageShopForm 
-        shop={shop} 
-        onSave={isEditing ? updateShop : createShop} 
-        isLoading={isCreateLoading || isUpdateLoading }
+          shop={shop} 
+          onSave={isEditing ? updateShop : createShop} 
+          isLoading={isCreateLoading || isUpdateLoading }
         />
     );
 };

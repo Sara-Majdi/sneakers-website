@@ -14,6 +14,8 @@ import { useEffect } from "react";
 import ManageShopPage from "@/pages/ManageShopPage";
 import AdminSidebar from "@/components/AdminSidebar";
 
+
+// Using Zod to validate all the form inputs 
 const formSchema = z.object({
     shopName: z.string({
         required_error: "shop name is required",
@@ -124,8 +126,11 @@ const ManageShopForm = ({ onSave, isLoading, shop }: Props) => {
                     >
                         
                         <DetailsSection/>
-                        <ImageSection/>
-                        {isLoading ? <LoadingButton/> : <Button type="submit">Submit</Button> }
+                        {isLoading ? <LoadingButton/> : 
+                            <Button type="submit" className="bg-violet2 text-2xl p-8 hover:bg-black hover:text-violet2 font-bold w-full font-inter ">
+                                Add Product
+                            </Button> 
+                        }
                     </form>
                 
             </Form>

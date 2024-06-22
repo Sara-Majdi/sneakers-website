@@ -26,10 +26,10 @@ const createMyShop = async ( req: Request, res: Response) => {
             return res.status(409).json({ message: "User shop already exist"});
         }
 
-        const imageUrl = await uploadImage(req.file as Express.Multer.File);
+        const imageArray = await uploadImage(req.file as Express.Multer.File);
 
         const shop = new Shop(req.body);
-        shop.imageUrl = imageUrl;
+        //shop.imageArray = imageArray;
         shop.user = new mongoose.Types.ObjectId(req.userId);
         shop.lastUpdated = new Date();
         await shop.save();
@@ -59,8 +59,8 @@ const updateMyShop = async (req: Request, res: Response) => {
         shop.lastUpdated = new Date();
 
         if(req.file) {
-            const imageUrl = await uploadImage(req.file as Express.Multer.File);
-            shop.imageUrl = imageUrl;
+            const imageArray = await uploadImage(req.file as Express.Multer.File);
+            //shop.imageArray = imageArray;
         }
 
         await shop.save();
@@ -80,6 +80,7 @@ const uploadImage = async (file: Express.Multer.File) =>{
     const uploadResponse = await cloudinary.v2.uploader.upload(dataURI);
     return uploadResponse.url;
 }
+
 
 export default {
     getMyShop,

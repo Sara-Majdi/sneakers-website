@@ -5,6 +5,10 @@ const sizeStockSchema = new mongoose.Schema({
     stock: { type: Number, required: true},
 });
 
+const imagePath = new mongoose.Schema({
+    path: { type: String, required: true},
+});
+
 const shopSchema = new mongoose.Schema({
     // ref is creating a link between the "user"model and the "shop"model
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User"},
@@ -14,7 +18,7 @@ const shopSchema = new mongoose.Schema({
     price: { type: String, required: true },
     category: [{ type: String, required: true }],
     sizeStock: [ sizeStockSchema],
-    imageUrl: {type: String, required: true},
+    imageArray: [ imagePath ],
     lastUpdated: { type: Date, required: true},
 });
 

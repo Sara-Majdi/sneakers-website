@@ -14,9 +14,9 @@ const Header = () => {
                     SoRa Sneakers
                 </Link>
                 <div className="flex gap-20 text-md font-medium font-inter mr-16">
-                    <p className="hover:text-violet">Men</p>
-                    <p className="hover:text-violet">Women</p>
-                    <p className="hover:text-violet">Kids</p>
+                    <Link to="/menProducts" className="hover:text-violet">Men</Link>
+                    <Link to="/womenProducts" className="hover:text-violet">Women</Link>
+                    <Link to="/kidsProducts" className="hover:text-violet">Kids</Link>
                 </div>
                 <div className="md:hidden">
                     <MobileNav/>

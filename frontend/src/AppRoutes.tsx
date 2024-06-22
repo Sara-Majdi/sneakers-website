@@ -10,6 +10,9 @@ import DetailPage from "./pages/DetailPage";
 import ManageHomePageForm from "./forms/manage-shop-form/ManageHomePageForm";
 import ManageProductsForm from "./forms/manage-shop-form/ManageProductsForm";
 import OrderDetails from "./forms/manage-shop-form/OrderDetails";
+import MenProductPage from "./pages/MenProductPage";
+import WomenProductPage from "./pages/WomenProductPage";
+import KidsProductPage from "./pages/KidsProductPage";
 
 const AppRoutes = () => {
     return (
@@ -21,6 +24,34 @@ const AppRoutes = () => {
                 </Layout>}/>
 
             <Route path="auth-callback" element={<AuthCallbackPage/>}/>
+
+            <Route 
+                path="/menProducts" 
+                element={
+                    <Layout homePage={false}>
+                        <MenProductPage />
+                    </Layout>
+                }
+            />
+
+            <Route 
+                path="/womenProducts" 
+                element={
+                    <Layout homePage={false}>
+                        <WomenProductPage />
+                    </Layout>
+                }
+            />
+
+            <Route 
+                path="/kidsProducts" 
+                element={
+                    <Layout homePage={false}>
+                        <KidsProductPage />
+                    </Layout>
+                }
+            />
+
             <Route 
                 path="/search/:color" 
                 element={

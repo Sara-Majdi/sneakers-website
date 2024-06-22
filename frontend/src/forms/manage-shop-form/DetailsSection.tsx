@@ -59,7 +59,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
     const menSizes = ["UK 7", "UK 7.5", "UK 8", "UK 8.5", "UK 9", "UK 9.5", "UK 10", "UK 10.5", "UK 11", "UK 11.5", "UK 12", "UK 12.5", "UK 13", "UK 13.5", "UK 14"];
     const kidsSizes = ["UK 1", "UK 1.5", "UK 2", "UK 2.5", "UK 3", "UK 3.5", "UK 4", "UK 4.5", "UK 5", "UK 5.5", "UK 6", "UK 6.5", "UK 7"];
 
-    const offers = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95"]
+    const offers = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90",]
 
 
     return (
@@ -345,6 +345,17 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
                                         <p className="font-inter font-medium">{`${offer}% OFF`}</p>
                                     </label>
                                 ))}
+
+                                <label className="flex items-center p-4 border rounded-md gap-1 h-[50px] bg-white " >
+                                    <Checkbox
+                                        // onCheckedChange={field.onChange}
+                                        // checked={field.value}
+                                        checked={productTag === 'noTags'}
+                                        onCheckedChange={() => handleTagClick('noTags')}
+                                        id="noTags" className="mr-2 h-5 w-5 border border-primary" />
+
+                                    <p className="font-inter font-medium">No Tags</p>
+                                </label>
                             </div>
                         
                         </FormControl>

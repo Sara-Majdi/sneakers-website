@@ -55,7 +55,7 @@ app.use('/uploads', express.static(uploadPath))
 
 
 //Retrieving Images from client and adding into 'uploads' folder
-app.post('/uploads', photosMiddleware.array("photos", 6), (req: Request, res: Response) => {
+app.post('/uploads', photosMiddleware.array("photos", 100), (req: Request, res: Response) => {
 
     const uploadedFiles = []
     const multerReq = req as MulterRequest;

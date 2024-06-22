@@ -52,7 +52,7 @@ type Props = {
     isLoading: boolean;
 }
 
-const ManageShopForm = ({ onSave, isLoading, shop }: Props) => {
+const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
     const form = useForm<ShopFormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -138,4 +138,4 @@ const ManageShopForm = ({ onSave, isLoading, shop }: Props) => {
     )
 };
 
-export default ManageShopForm;
+export default AddProductsForm;

@@ -7,6 +7,9 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import ManageShopPage from "./pages/ManageShopPage";
 import SearchPage from "./pages/SearchPage";
 import DetailPage from "./pages/DetailPage";
+import ManageHomePageForm from "./forms/manage-shop-form/ManageHomePageForm";
+import ManageProductsForm from "./forms/manage-shop-form/ManageProductsForm";
+import OrderDetails from "./forms/manage-shop-form/OrderDetails";
 
 const AppRoutes = () => {
     return (
@@ -48,10 +51,42 @@ const AppRoutes = () => {
                     }
                 />
                 <Route 
-                    path="/manage-shop" 
+                    path="/admin/manageHomePage" 
+                    element={
+                        <Layout adminPage={true} >
+                            <ManageHomePageForm />
+                        </Layout>
+                    }
+                />
+                <Route 
+                    path="/admin/addProducts" 
                     element={
                         <Layout adminPage={true} >
                             <ManageShopPage />
+                        </Layout>
+                    }
+                />
+                <Route 
+                    path="/admin/addProducts" 
+                    element={
+                        <Layout adminPage={true} >
+                            <ManageShopPage />
+                        </Layout>
+                    }
+                />
+                <Route 
+                    path="/admin/manageProducts" 
+                    element={
+                        <Layout adminPage={true} >
+                            <ManageProductsForm />
+                        </Layout>
+                    }
+                />
+                <Route 
+                    path="/admin/orderDetails" 
+                    element={
+                        <Layout adminPage={true} >
+                            <OrderDetails />
                         </Layout>
                     }
                 />

@@ -1,5 +1,5 @@
 import { useCreateMyShop, useGetMyShop, useUpdateMyShop } from "@/api/MyShopApi";
-import ManageShopForm from "@/forms/manage-shop-form/ManageShopForm";
+import AddProductsForm from "@/forms/manage-shop-form/AddProductsForm";
 
 const ManageShopPage = () => {
     const { createShop, isLoading: isCreateLoading } = useCreateMyShop();
@@ -9,7 +9,7 @@ const ManageShopPage = () => {
     const isEditing = !!shop;
 
     return  (
-        <ManageShopForm 
+        <AddProductsForm 
           shop={shop} 
           onSave={isEditing ? updateShop : createShop} 
           isLoading={isCreateLoading || isUpdateLoading }

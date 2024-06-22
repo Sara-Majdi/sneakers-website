@@ -26,7 +26,7 @@ const UsernameMenu = () => {
                 {currentUser?.isAdmin &&
                     <DropdownMenuItem>
                         <Link  
-                            to="/manage-shop" 
+                            to="/admin/manageHomePage" 
                             className="font-bold hover:text-violet3">
                             Admin
                         </Link>
@@ -34,7 +34,6 @@ const UsernameMenu = () => {
 
                 }
 
-                
                 <DropdownMenuItem>
                     <Link to="/user-profile" className="font-bold hover:text-violet3">
                         User Profile

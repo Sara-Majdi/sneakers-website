@@ -25,12 +25,12 @@ const ImageSection = () => {
                     <AspectRatio ratio={16/9}>
                         <img src={existingImageUrl} className="rounded-md object-cover h-full w-full"/>
                     </AspectRatio>
-                )
-            }
+                )}
+                
                 <FormField 
-                control={control} 
-                name="imageFile" 
-                render={({field}) => <FormItem>
+                    control={control} 
+                    name="imageFile" 
+                    render={({field}) => <FormItem>
                     <FormControl>
                         <Input 
                             className="bg-white" 
@@ -38,7 +38,7 @@ const ImageSection = () => {
                             accept=".jpg, .jpeg, .png"
                             onChange={(event) => 
                                 field.onChange(
-                                    //if users put more than 1 picture, it will selct only the 1st one
+                                    //if users put more than 1 picture, it will select only the 1st one
                                     event.target.files ? event.target.files[0]: null
                                 )
                             }

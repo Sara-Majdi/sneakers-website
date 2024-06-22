@@ -32,22 +32,27 @@ export const useGetMyShop = () => {
     return { shop, isLoading };
 };
 
-export const useCreateMyShop = () => {
+export const useCreateProduct = () => {
     const { getAccessTokenSilently } = useAuth0();
+    
 
     //functionn is going to accept the formData
-    const createMyShopRequest = async(
-        shopFormData: FormData
+    const createProductRequest = async(
+        productFormData: FormData
     ):Promise<Shop[]> => {
         const accessToken = await getAccessTokenSilently();
-
+        console.log('Form Data successfully reach here, fix the below response function')
+        //console.log(productFormData)
+        console.log('Form data:', Array.from(productFormData.entries()));
         const response = await fetch(`${API_BASE_URL}/api/my/shop`,{
             method: "POST",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
+                // 'Content-Type': 'multipart/form-data',
             },
-            body: shopFormData,
+            body: productFormData,
         });
+
 
         if(!response.ok){
             throw new Error("Failed to create shop");
@@ -57,21 +62,23 @@ export const useCreateMyShop = () => {
     };
 
     const { 
-        mutate: createShop, 
+        mutate: createProduct, 
         isLoading, 
         isSuccess, 
         error 
-    } = useMutation(createMyShopRequest);
+    } = useMutation(createProductRequest);
 
+    let redirectPath = ""
     if(isSuccess) {
-        toast.success("Shop created!")
+        toast.success("Product Added Successfully!")
+        redirectPath = "/admin/manageProducts"
     }
-
+    // Now It is sent here already but giving this error
     if(error) {
-        toast.error("Unable to update shop");
+        toast.error('Unable to Add Product');
     }
 
-    return { createShop, isLoading };
+    return { createProduct, isLoading, redirectPath };
 };
 
 export const useUpdateMyShop = () => {

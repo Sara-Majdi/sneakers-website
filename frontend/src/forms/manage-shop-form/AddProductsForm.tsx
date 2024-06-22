@@ -6,11 +6,12 @@ import DetailsSection from "./DetailsSection";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
 import { Shop } from "@/types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
+import ProductImageSection from "./ProductImageSection";
 
 
-// Using Zod to validate all the form inputs 
+//////////////////////////////// Using Zod to validate all the form inputs ////////////////////////////////
 const formSchema = z.object({
     productName: z.string({
         required_error: "Product Name is required",
@@ -30,9 +31,7 @@ const formSchema = z.object({
 
     productCategory: z.array(z.string()).optional(),
 
-    productSizes: z.string({required_error: "Please select at least one Size"}).array().min( 1 , {
-        message: "Please select at least one Size"
-    }),
+    productSizes: z.array(z.string()).optional(),
 
     productDescription: z.string({
         required_error: "Product Description is required",
@@ -40,72 +39,59 @@ const formSchema = z.object({
 
     productTags: z.array(z.string()).optional(),
 
-    productImages: z.instanceof(File, { message: "Product Image is required" }),
-
-    shopName: z.string({
-        required_error: "shop name is required",
-    }),
-    color: z.string({
-        required_error: "color name is required",
-    }),
-    price: z.coerce.number({
-        required_error: "price name is required",
-        invalid_type_error: "must be a valid number",
-    }),
-    category: z.array(z.string()).nonempty({
-        message: "please select atleast one item"
-    }),
-    sizeStock: z.array(
-        z.object({
-            size: z.string().min(1, "size is required"),
-            stock: z.coerce.number().min(1, "stock is required"),
-        })
-    ),
-    imageUrl: z.string().optional(),
-    imageFile: z.instanceof(File, { message: "image is required" }).optional(),
+    productImages: z.instanceof(File, { message: "Product Image is required" }).optional(),
 })
-.refine((data) => data.imageUrl || data.imageFile, {
-    message: "Either image URL or image File must be provided",
-    path: ["imageFile"],
-});
 
+// Creating types for FormSchema
 type ProductFormData = z.infer<typeof formSchema>
 
+// Creating Types for the AddProductsForm below
 type Props = {
     shop?: Shop;
     onSave: (shopFormData: FormData) => void;
     isLoading: boolean;
 }
 
+///////////////////////////////// ADD PRODUCTS FORM /////////////////////////////////////
 const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
+    // Declaring states for category, product sizes and product tags
+    const [selectedCategory, setSelectedCategory] = useState<string>('men');
+    const [productSizes, setProductSizes] = useState<string[]>([]);
+    const [productTag, setProductTag] = useState<string>('newArrivals');
+    const [addedPhotos, setAddedPhotos] = useState<string[]>([]);
+    // console.log(selectedCategory)
+    // console.log(productSizes)
+    // console.log(productTag)
+    // console.log(addedPhotos)
+
+    // Passing the Validations Form Schema 
     const form = useForm<ProductFormData>({
         resolver: zodResolver(formSchema),
-
     });
 
     // Used for updating Products
-    useEffect(() =>{
-        if(!shop){
-            return;
-        }
+    // useEffect(() =>{
+    //     if(!shop){
+    //         return;
+    //     }
 
-        const priceFormatted = parseInt(
-            (shop.price / 100).toFixed(2)//delete: dont need to 2dc decimal point
-        );
+    //     const priceFormatted = parseInt(
+    //         (shop.price / 100).toFixed(2)//delete: dont need to 2dc decimal point
+    //     );
 
-        const sizeStockFormatted = shop.sizeStock.map((item)=> ({
-            ...item,
-            stock: parseInt((item.stock / 100).toFixed(2)),
-        }));
+    //     const sizeStockFormatted = shop.sizeStock.map((item)=> ({
+    //         ...item,
+    //         stock: parseInt((item.stock / 100).toFixed(2)),
+    //     }));
 
-        const updatedShop = {
-            ...shop,
-            price: priceFormatted,
-            sizeStock: sizeStockFormatted,
-        };
+    //     const updatedShop = {
+    //         ...shop,
+    //         price: priceFormatted,
+    //         sizeStock: sizeStockFormatted,
+    //     };
 
-        form.reset(updatedShop);
-    }, [form, shop]);
+    //     form.reset(updatedShop);
+    // }, [form, shop]);
 
     const onSubmit = (formDataJson: ProductFormData) => {
         // TODO - convert formDataJson to a new FormData object
@@ -118,6 +104,15 @@ const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
             (formDataJson.productPrice * 100).toString()
         );
         formData.append("productStock", (formDataJson.productStock * 100).toString());
+        formData.append("productCategory", selectedCategory);
+        productSizes.forEach((size, index) => {
+            formData.append(`Size[${index}]`, size);
+        });
+        formData.append("productDescription", formDataJson.productDescription);
+        formData.append("productTags", productTag);
+        addedPhotos.forEach((photo, index) => {
+            formData.append(`Photo[${index}]`, photo);
+        });
 
         // formDataJson.category.forEach((category, index) => {
         //     formData.append(`category[${index}]`, category);
@@ -134,7 +129,7 @@ const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
         // if (formDataJson.imageFile) {
         //     formData.append(`imageFile`, formDataJson.imageFile);
         // }
-        
+        console.log(formData)
         onSave(formData);
     };
 
@@ -148,7 +143,21 @@ const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
                         className="space-y-8 bg-gray-50 px-10 pb-10 py-4 rounded-lg w-full ml-[350px]"
                     >
                         
-                        <DetailsSection/>
+                        <DetailsSection 
+                            selectedCategory={selectedCategory}
+                            setSelectedCategory={setSelectedCategory}
+                            productSizes={productSizes}
+                            setProductSizes={setProductSizes}
+                            productTag={productTag}
+                            setProductTag={setProductTag}
+                        />
+
+                        <ProductImageSection 
+                            addedPhotos={addedPhotos}
+                            setAddedPhotos={setAddedPhotos}
+            
+                        />
+
                         {isLoading ? <LoadingButton/> : 
                             <Button type="submit" className="bg-violet2 text-2xl p-8 hover:bg-black hover:text-violet2 font-bold w-full font-inter ">
                                 Add Product

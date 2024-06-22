@@ -3,23 +3,24 @@ import Shop from "../models/shop";
 import cloudinary from "cloudinary";
 import mongoose from "mongoose";
 
-const getMyShop = async (req: Request, res: Response) => {
-    try {
-        const shop = await Shop.findOne({ user: req.userId });
-        if(!shop) {
-            return res.status(404).json({ message: "shop not found"});
-        }
-        res.json(shop);
+// const getMyShop = async (req: Request, res: Response) => {
+//     try {
+//         const shop = await Shop.findOne({ user: req.userId });
+//         if(!shop) {
+//             return res.status(404).json({ message: "shop not found"});
+//         }
+//         res.json(shop);
 
-    } catch (error) {
-        console.log("error", error);
-        res.status(500).json({ message: "Error fetching shop"});
-    }
-}
+//     } catch (error) {
+//         console.log("error", error);
+//         res.status(500).json({ message: "Error fetching shop"});
+//     }
+// }
 
 const createMyShop = async ( req: Request, res: Response) => {
     try {
         //finding 
+        console.log('Request reached createMyShop function already')
         const existingShop = await Shop.findOne({ user: req.userId})
 
         if(existingShop) {
@@ -83,7 +84,7 @@ const uploadImage = async (file: Express.Multer.File) =>{
 
 
 export default {
-    getMyShop,
+    // getMyShop,
     createMyShop,
     updateMyShop,
 }

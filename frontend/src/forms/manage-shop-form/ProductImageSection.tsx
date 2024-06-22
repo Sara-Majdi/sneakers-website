@@ -5,8 +5,13 @@ import { ChangeEvent, MouseEvent, useState } from "react";
 import axios from 'axios';
 import { Input } from "@/components/ui/input";
 
-const ProductImageSection = () => {
-  const [addedPhotos, setAddedPhotos] = useState<string[]>([]);
+// Define interfaces for the props
+interface ProductImageSectionProps {
+  addedPhotos: string[];
+  setAddedPhotos: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const ProductImageSection: React.FC<ProductImageSectionProps> = ({addedPhotos,setAddedPhotos}) => {
 
   async function uploadPhoto(event: ChangeEvent<HTMLInputElement>) {
     event.preventDefault();

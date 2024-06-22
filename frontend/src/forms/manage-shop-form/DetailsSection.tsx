@@ -7,12 +7,27 @@ import { ChangeEvent, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ProductImageSection from "./ProductImageSection";
 
-const DetailsSection = () => {
-    const { control } = useFormContext();
 
-    const [selectedCategory, setSelectedCategory] = useState<string>('men');
-    const [productSizes, setProductSizes] = useState<string[]>([]);
-    const [productTag, setProductTag] = useState<string>('newArrivals');
+// Define interfaces for the props
+interface DetailsSectionProps {
+    selectedCategory: string;
+    setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+    productSizes: string[];
+    setProductSizes: React.Dispatch<React.SetStateAction<string[]>>;
+    productTag: string;
+    setProductTag: React.Dispatch<React.SetStateAction<string>>;
+}
+
+
+const DetailsSection: React.FC<DetailsSectionProps> = ({
+    selectedCategory,
+    setSelectedCategory,
+    productSizes,
+    setProductSizes,
+    productTag,
+    setProductTag
+}) => {
+    const { control } = useFormContext();
 
     const handleCategoryClick = (category: string) => {
         setSelectedCategory(category);
@@ -38,9 +53,7 @@ const DetailsSection = () => {
         
       }
 
-    console.log(productSizes)
-    const unchecked = productSizes.includes('UK 7')
-    console.log(unchecked)
+    // console.log(productSizes)
 
     const womenSizes = ["UK 5", "UK 5.5", "UK 6", "UK 6.5", "UK 7", "UK 7.5", "UK 8", "UK 8.5", "UK 9", "UK 9.5", "UK 10", "UK 10.5", "UK 11", "UK 11.5", "UK 12"];
     const menSizes = ["UK 7", "UK 7.5", "UK 8", "UK 8.5", "UK 9", "UK 9.5", "UK 10", "UK 10.5", "UK 11", "UK 11.5", "UK 12", "UK 12.5", "UK 13", "UK 13.5", "UK 14"];
@@ -343,7 +356,7 @@ const DetailsSection = () => {
 
             </div>
 
-            <ProductImageSection />
+            
             
         </div>
     );

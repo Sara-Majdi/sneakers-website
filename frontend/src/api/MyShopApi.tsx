@@ -34,19 +34,20 @@ export const useGetMyShop = () => {
 
 export const useCreateMyShop = () => {
     const { getAccessTokenSilently } = useAuth0();
+    
 
     //functionn is going to accept the formData
     const createMyShopRequest = async(
-        shopFormData: FormData
+        productFormData: FormData
     ):Promise<Shop[]> => {
         const accessToken = await getAccessTokenSilently();
-
+        console.log('Form Data successfully reach here, fix the below response function')
         const response = await fetch(`${API_BASE_URL}/api/my/shop`,{
             method: "POST",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
-            body: shopFormData,
+            body: productFormData,
         });
 
         if(!response.ok){
@@ -64,11 +65,11 @@ export const useCreateMyShop = () => {
     } = useMutation(createMyShopRequest);
 
     if(isSuccess) {
-        toast.success("Shop created!")
+        toast.success("Product created!")
     }
-
+    // Now It is sent here already but giving this error
     if(error) {
-        toast.error("Unable to update shop");
+        toast.error("Unable to create product");
     }
 
     return { createShop, isLoading };

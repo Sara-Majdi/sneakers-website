@@ -17,13 +17,13 @@ const upload = multer({
 });
 
 //GET /api/my/shop
-router.get("/", jwtCheck, jwtParse, MyShopController.getMyShop)
+// router.get("/", jwtCheck, jwtParse, MyShopController.getMyShop)
 
 // /api/my/shop
 router.post(
     "/", 
-    upload.array("imageFile", 5), 
-    validateMyShopRequest,
+    //upload.array("imageFile", 5), 
+    //validateMyShopRequest,
     jwtCheck,
     jwtParse,
     MyShopController.createMyShop
@@ -38,16 +38,16 @@ router.put(
     MyShopController.updateMyShop
 );
 
-const photosMiddleware = multer({dest: 'uploads/'});
-app.post('/', photosMiddleware.array("photos", 5), (req, res) => {
-    console.log(req.files)
-    res.json(req.files)
-})
+// const photosMiddleware = multer({dest: 'uploads/'});
+// app.post('/', photosMiddleware.array("photos", 5), (req, res) => {
+//     console.log(req.files)
+//     res.json(req.files)
+// })
 
-router.post('/', photosMiddleware.array("photos", 5), (req, res) => {
-    console.log(req.files)
-    res.json(req.files)
-})
+// router.post('/', photosMiddleware.array("photos", 5), (req, res) => {
+//     console.log(req.files)
+//     res.json(req.files)
+// })
 
 
 

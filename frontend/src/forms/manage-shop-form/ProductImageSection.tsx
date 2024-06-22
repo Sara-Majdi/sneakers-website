@@ -39,7 +39,6 @@ const ProductImageSection: React.FC<ProductImageSectionProps> = ({addedPhotos,se
     }
 
   }
-
   // console.log(addedPhotos)
 
   function deletePhoto(event: any,photo: any){

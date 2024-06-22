@@ -9,6 +9,8 @@ import { Shop } from "@/types";
 import { useEffect, useState } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
 import ProductImageSection from "./ProductImageSection";
+import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 
 //////////////////////////////// Using Zod to validate all the form inputs ////////////////////////////////
@@ -50,15 +52,18 @@ type Props = {
     shop?: Shop;
     onSave: (shopFormData: FormData) => void;
     isLoading: boolean;
+    redirectPath: string;
 }
 
 ///////////////////////////////// ADD PRODUCTS FORM /////////////////////////////////////
-const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
+const AddProductsForm = ({ onSave, isLoading, shop, redirectPath }: Props) => {
     // Declaring states for category, product sizes and product tags
     const [selectedCategory, setSelectedCategory] = useState<string>('men');
     const [productSizes, setProductSizes] = useState<string[]>([]);
     const [productTag, setProductTag] = useState<string>('newArrivals');
     const [addedPhotos, setAddedPhotos] = useState<string[]>([]);
+    const [redirect, setRedirect] = useState<string>('');
+    
     // console.log(selectedCategory)
     // console.log(productSizes)
     // console.log(productTag)
@@ -97,6 +102,24 @@ const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
         // TODO - convert formDataJson to a new FormData object
         const formData= new FormData();
 
+        if (productSizes.length <= 0){
+            toast.error('Please select at least 1 Product Size');
+            return
+        }
+
+        if (addedPhotos.length <= 0){
+            toast.error('Please Upload at least 1 Product Image');
+            return
+        }
+
+        if (addedPhotos.length > 5){
+            toast.error('Only 5 Product Images at Max is allowed');
+            //addedPhotos.pop()
+            return
+        }
+
+
+
         formData.append("productName", formDataJson.productName);
         formData.append("productCode", formDataJson.productCode);
         formData.append(
@@ -114,22 +137,8 @@ const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
             formData.append(`productImages[${index}]`, photo);
         });
 
-        // formDataJson.category.forEach((category, index) => {
-        //     formData.append(`category[${index}]`, category);
-        // });
-
-        // formDataJson.sizeStock.forEach((sizeStock, index) => {
-        //     formData.append(`sizeStock[${index}][size]`, sizeStock.size)
-        //     formData.append(
-        //         `sizeStock[${index}][stock]`, 
-        //         (sizeStock.stock * 100).toString()
-        //     );
-        // });
-
-        // if (formDataJson.imageFile) {
-        //     formData.append(`imageFile`, formDataJson.imageFile);
-        // }
-        console.log('Form data:', Array.from(formData.entries()));
+        
+        //console.log('Form data:', Array.from(formData.entries()));
         onSave(formData);
     };
 
@@ -159,8 +168,10 @@ const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
                         />
 
                         {isLoading ? <LoadingButton/> : 
-                            <Button type="submit" className="bg-violet2 text-2xl p-8 hover:bg-black hover:text-violet2 font-bold w-full font-inter ">
-                                Add Product
+                            <Button type="submit" className="bg-violet2 text-2xl p-8 hover:bg-black hover:text-violet2 font-bold w-full font-inter">
+                                <Link to={redirectPath} >
+                                    Add Product
+                                </Link> 
                             </Button> 
                         }
                     </form>

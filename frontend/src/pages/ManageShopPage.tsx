@@ -1,8 +1,8 @@
-import { useCreateMyShop, useGetMyShop, useUpdateMyShop } from "@/api/MyShopApi";
+import { useCreateProduct, useGetMyShop, useUpdateMyShop } from "@/api/ProductsApi";
 import AddProductsForm from "@/forms/manage-shop-form/AddProductsForm";
 
 const ManageShopPage = () => {
-    const { createShop, isLoading: isCreateLoading } = useCreateMyShop();
+    const { createProduct, isLoading: isCreateLoading, redirectPath } = useCreateProduct();
     const { shop } = useGetMyShop();
     const {  updateShop, isLoading: isUpdateLoading } = useUpdateMyShop();
 
@@ -11,8 +11,9 @@ const ManageShopPage = () => {
     return  (
         <AddProductsForm 
           shop={shop} 
-          onSave={isEditing ? updateShop : createShop} 
+          onSave={isEditing ? updateShop : createProduct} 
           isLoading={isCreateLoading || isUpdateLoading }
+          redirectPath={redirectPath}
         />
     );
 };

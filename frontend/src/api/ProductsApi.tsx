@@ -32,12 +32,12 @@ export const useGetMyShop = () => {
     return { shop, isLoading };
 };
 
-export const useCreateMyShop = () => {
+export const useCreateProduct = () => {
     const { getAccessTokenSilently } = useAuth0();
     
 
     //functionn is going to accept the formData
-    const createMyShopRequest = async(
+    const createProductRequest = async(
         productFormData: FormData
     ):Promise<Shop[]> => {
         const accessToken = await getAccessTokenSilently();
@@ -53,14 +53,6 @@ export const useCreateMyShop = () => {
             body: productFormData,
         });
 
-        const statusCode = response.status
-        const serverResponse = await response.json()
-        const responseMessage = serverResponse.message
-        console.log(statusCode)
-
-        if (statusCode === 409){
-            toast.error(responseMessage);
-        }
 
         if(!response.ok){
             throw new Error("Failed to create shop");
@@ -70,21 +62,23 @@ export const useCreateMyShop = () => {
     };
 
     const { 
-        mutate: createShop, 
+        mutate: createProduct, 
         isLoading, 
         isSuccess, 
         error 
-    } = useMutation(createMyShopRequest);
+    } = useMutation(createProductRequest);
 
+    let redirectPath = ""
     if(isSuccess) {
         toast.success("Product Added Successfully!")
+        redirectPath = "/admin/manageProducts"
     }
     // Now It is sent here already but giving this error
     if(error) {
-        toast.error('Unable to Add Product. Product with this Product Code Already Exist.');
+        toast.error('Unable to Add Product');
     }
 
-    return { createShop, isLoading };
+    return { createProduct, isLoading, redirectPath };
 };
 
 export const useUpdateMyShop = () => {

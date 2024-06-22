@@ -3,6 +3,7 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { ImageUp } from "lucide-react";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import axios from 'axios';
+import { Input } from "@/components/ui/input";
 
 const ProductImageSection = () => {
   const [addedPhotos, setAddedPhotos] = useState<string[]>([]);
@@ -18,7 +19,6 @@ const ProductImageSection = () => {
     for (let i=0; i<files.length; i++){
         data.append('photos', files[i]);
     }
-    console.log(`Data: ${data}`)
 
     try {
       const response = await axios.post('http://localhost:7000/uploads', data, {
@@ -35,7 +35,7 @@ const ProductImageSection = () => {
 
   }
 
-  {console.log(addedPhotos)}
+  // console.log(addedPhotos)
 
   function deletePhoto(event: any,photos: any){
     return
@@ -56,7 +56,7 @@ const ProductImageSection = () => {
               <FormLabel className="text-xl">Product Images</FormLabel>
               <FormControl className="h-72 bg-white">
                   <label className="flex w-full flex-col text-grey-500 overflow-hidden rounded-md border bg-primary-50 justify-center items-center text-gray-400 cursor-pointer">
-                    <input type="file" className="hidden" multiple onChange={uploadPhoto} />
+                    <Input type="file" className="hidden" multiple onChange={uploadPhoto} />
                     <ImageUp width={77} height={77} className="" />
                     <h3 className="mb-2 mt-2 text-lg font-semibold">Upload Photos</h3>
                     <p className="text-md mb-4">(SVG, PNG, JPG)</p>

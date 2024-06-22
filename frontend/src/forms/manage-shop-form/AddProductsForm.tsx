@@ -3,20 +3,45 @@ import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { z } from "zod";
 import DetailsSection from "./DetailsSection";
-import { Separator } from "@radix-ui/react-separator";
-import CategorySection from "./CategorySection";
-import SizeSection from "./SizeSection";
-import ImageSection from "./ImageSection";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
 import { Shop } from "@/types";
 import { useEffect } from "react";
-import ManageShopPage from "@/pages/ManageShopPage";
 import AdminSidebar from "@/components/AdminSidebar";
 
 
 // Using Zod to validate all the form inputs 
 const formSchema = z.object({
+    productName: z.string({
+        required_error: "Product Name is required",
+    }),
+    productCode: z.string({
+        required_error: "Product Code is required",
+    }),
+    productPrice: z.coerce.number({
+        required_error: "Product Price is required",
+        invalid_type_error: "Must be a valid number",
+    }).min(10, { message: "Product Price should be at least RM10" }),
+
+    productStock: z.coerce.number({
+        required_error: "Product Stock is required",
+        invalid_type_error: "Must be a valid integer",
+    }).int().min(10, { message: "Product Stock should be at least 10" }),
+
+    productCategory: z.array(z.string()).optional(),
+
+    productSizes: z.string({required_error: "Please select at least one Size"}).array().min( 1 , {
+        message: "Please select at least one Size"
+    }),
+
+    productDescription: z.string({
+        required_error: "Product Description is required",
+    }).min(100, { message: "Product Description should be at least 100 characters long" }),
+
+    productTags: z.array(z.string()).optional(),
+
+    productImages: z.instanceof(File, { message: "Product Image is required" }),
+
     shopName: z.string({
         required_error: "shop name is required",
     }),
@@ -44,7 +69,7 @@ const formSchema = z.object({
     path: ["imageFile"],
 });
 
-type ShopFormData = z.infer<typeof formSchema>
+type ProductFormData = z.infer<typeof formSchema>
 
 type Props = {
     shop?: Shop;
@@ -53,14 +78,12 @@ type Props = {
 }
 
 const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
-    const form = useForm<ShopFormData>({
+    const form = useForm<ProductFormData>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            category: [],
-            sizeStock: [{size:"", stock: 0 }],
-        },
+
     });
 
+    // Used for updating Products
     useEffect(() =>{
         if(!shop){
             return;
@@ -84,33 +107,33 @@ const AddProductsForm = ({ onSave, isLoading, shop }: Props) => {
         form.reset(updatedShop);
     }, [form, shop]);
 
-    const onSubmit = (formDataJson: ShopFormData) => {
+    const onSubmit = (formDataJson: ProductFormData) => {
         // TODO - convert formDataJson to a new FormData object
         const formData= new FormData();
 
-        formData.append("shopName", formDataJson.shopName);
-        formData.append("color", formDataJson.color);
-
+        formData.append("productName", formDataJson.productName);
+        formData.append("productCode", formDataJson.productCode);
         formData.append(
-            "price", 
-            (formDataJson.price * 100).toString()
+            "productPrice", 
+            (formDataJson.productPrice * 100).toString()
         );
+        formData.append("productStock", (formDataJson.productStock * 100).toString());
 
-        formDataJson.category.forEach((category, index) => {
-            formData.append(`category[${index}]`, category);
-        });
+        // formDataJson.category.forEach((category, index) => {
+        //     formData.append(`category[${index}]`, category);
+        // });
 
-        formDataJson.sizeStock.forEach((sizeStock, index) => {
-            formData.append(`sizeStock[${index}][size]`, sizeStock.size)
-            formData.append(
-                `sizeStock[${index}][stock]`, 
-                (sizeStock.stock * 100).toString()
-            );
-        });
+        // formDataJson.sizeStock.forEach((sizeStock, index) => {
+        //     formData.append(`sizeStock[${index}][size]`, sizeStock.size)
+        //     formData.append(
+        //         `sizeStock[${index}][stock]`, 
+        //         (sizeStock.stock * 100).toString()
+        //     );
+        // });
 
-        if (formDataJson.imageFile) {
-            formData.append(`imageFile`, formDataJson.imageFile);
-        }
+        // if (formDataJson.imageFile) {
+        //     formData.append(`imageFile`, formDataJson.imageFile);
+        // }
         
         onSave(formData);
     };

@@ -3,7 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ProductImageSection from "./ProductImageSection";
 
@@ -11,19 +11,41 @@ const DetailsSection = () => {
     const { control } = useFormContext();
 
     const [selectedCategory, setSelectedCategory] = useState<string>('men');
-    const [productTag, setProductTag] = useState<string>('');
+    const [productSizes, setProductSizes] = useState<string[]>([]);
+    const [productTag, setProductTag] = useState<string>('newArrivals');
 
     const handleCategoryClick = (category: string) => {
         setSelectedCategory(category);
+        setProductSizes([])
     };
 
     const handleTagClick = (tag: string) => {
         setProductTag(tag);
     };
 
-    const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12]
-    const menSizes = [7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14]
-    const kidsSizes = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7]
+    function handleSizeCheckbox (size: string) { 
+        // Add all clicked sizes into setProductSizes array
+        // If array element is clicked again then remove it from the array
+        // If category changes then remove everything inside array
+        const index = productSizes.indexOf(size)
+
+        if (index === -1){ //If index is -1, means size is not in the array
+            setProductSizes([...productSizes, size])
+        }
+        else {
+            productSizes.splice(index, 1)
+        }
+        
+      }
+
+    console.log(productSizes)
+    const unchecked = productSizes.includes('UK 7')
+    console.log(unchecked)
+
+    const womenSizes = ["UK 5", "UK 5.5", "UK 6", "UK 6.5", "UK 7", "UK 7.5", "UK 8", "UK 8.5", "UK 9", "UK 9.5", "UK 10", "UK 10.5", "UK 11", "UK 11.5", "UK 12"];
+    const menSizes = ["UK 7", "UK 7.5", "UK 8", "UK 8.5", "UK 9", "UK 9.5", "UK 10", "UK 10.5", "UK 11", "UK 11.5", "UK 12", "UK 12.5", "UK 13", "UK 13.5", "UK 14"];
+    const kidsSizes = ["UK 1", "UK 1.5", "UK 2", "UK 2.5", "UK 3", "UK 3.5", "UK 4", "UK 4.5", "UK 5", "UK 5.5", "UK 6", "UK 6.5", "UK 7"];
+
     const offers = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95"]
 
 
@@ -137,8 +159,8 @@ const DetailsSection = () => {
                             <div className="grid grid-cols-2 md:grid-cols-3  gap-2">
                                 <label className="flex items-center p-4 border rounded-md gap-2 h-[50px] bg-white">
                                     <Checkbox
-                                        // onCheckedChange={field.onChange}
-                                        // checked={field.value} 
+                                        //onCheckedChange={field.onChange}
+                                        //checked={field.value} 
                                         checked={selectedCategory === 'men'}
                                         onCheckedChange={() => handleCategoryClick('men')}
                                         id="men" className="mr-2 h-5 w-5 border border-primary" />
@@ -185,7 +207,7 @@ const DetailsSection = () => {
                         </FormItem>
                     )}
                 />
-
+                
                 <FormField
                     // control={form.control}
                     name="productSizes"
@@ -194,36 +216,37 @@ const DetailsSection = () => {
                         <FormLabel className="text-xl">Product Sizes</FormLabel>
                         <FormControl>
                             <div className="grid grid-cols-2 md:grid-cols-4  gap-1.5">
-                                {selectedCategory == 'men' && menSizes.map(size => (
-                                    <label className="flex items-center p-4 border rounded-md gap-2 h-[50px] bg-white ">
+                                {selectedCategory == 'men' && menSizes.map((size, index) => (
+                                    <label className="flex items-center p-4 border rounded-md gap-2 h-[50px] bg-white" >
                                         <Checkbox
-                                            // onCheckedChange={field.onChange}
-                                            // checked={field.value}
+                                            onCheckedChange={() => handleSizeCheckbox(size)}
+                                            name={size}
+                                            checked={field.value}
                                             id="men" className="mr-2 h-5 w-5 border border-primary " />
 
-                                        <p className="font-inter font-medium">{`UK ${size}`}</p>
+                                        <p className="font-inter font-medium">{`${size}`}</p>
                                     </label>
                                 ))}
 
                                 {selectedCategory == 'women' && womenSizes.map(size => (
                                     <label className="flex items-center p-4 border rounded-md gap-2 h-[50px] bg-white ">
-                                        <Checkbox
-                                            // onCheckedChange={field.onChange}
-                                            // checked={field.value}
+                                        <Checkbox name={size}
+                                            onCheckedChange={() => handleSizeCheckbox(size)}
+                                            checked={field.value}
                                             id="men" className="mr-2 h-5 w-5 border border-primary " />
 
-                                        <p className="font-inter font-medium">{`UK ${size}`}</p>
+                                        <p className="font-inter font-medium">{`${size}`}</p>
                                     </label>
                                 ))}
 
                                 {selectedCategory == 'kids' && kidsSizes.map(size => (
                                     <label className="flex items-center p-4 border rounded-md gap-2 h-[50px] bg-white ">
-                                        <Checkbox
-                                            // onCheckedChange={field.onChange}
-                                            // checked={field.value}
+                                        <Checkbox name={size}
+                                            onCheckedChange={() => handleSizeCheckbox(size)}
+                                            checked={field.value}
                                             id="men" className="mr-2 h-5 w-5 border border-primary " />
 
-                                        <p className="font-inter font-medium">{`UK ${size}`}</p>
+                                        <p className="font-inter font-medium">{`${size}`}</p>
                                     </label>
                                 ))}
                                 
@@ -270,14 +293,14 @@ const DetailsSection = () => {
 
                 <FormField
                     // control={form.control}
-                    name="productPrice"
+                    name="productTags"
                     render={({ field }) => (
                         <FormItem className="w-full">
                         <FormLabel className="text-xl">Product Tags</FormLabel>
                         <FormControl>
                             <div className="grid grid-cols-2 md:grid-cols-3  gap-2 ">
                                 <label className="flex items-center p-4 border rounded-md gap-2 h-[50px] bg-white">
-                                    <Checkbox
+                                    <Checkbox 
                                         // onCheckedChange={field.onChange}
                                         // checked={field.value} 
                                         checked={productTag === 'newArrivals'}

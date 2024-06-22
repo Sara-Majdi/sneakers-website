@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
 import ProductImageSection from "./ProductImageSection";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 //////////////////////////////// Using Zod to validate all the form inputs ////////////////////////////////
@@ -63,6 +63,13 @@ const AddProductsForm = ({ onSave, isLoading, shop, redirectPath }: Props) => {
     const [productTag, setProductTag] = useState<string>('newArrivals');
     const [addedPhotos, setAddedPhotos] = useState<string[]>([]);
     const [redirect, setRedirect] = useState<string>('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (redirectPath) {
+            navigate('/admin/manageProducts');
+        }
+    }, [redirectPath, navigate]);
     
     // console.log(selectedCategory)
     // console.log(productSizes)
@@ -169,9 +176,7 @@ const AddProductsForm = ({ onSave, isLoading, shop, redirectPath }: Props) => {
 
                         {isLoading ? <LoadingButton/> : 
                             <Button type="submit" className="bg-violet2 text-2xl p-8 hover:bg-black hover:text-violet2 font-bold w-full font-inter">
-                                <Link to={redirectPath} >
-                                    Add Product
-                                </Link> 
+                                Add Product
                             </Button> 
                         }
                     </form>

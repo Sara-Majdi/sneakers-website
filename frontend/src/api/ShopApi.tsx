@@ -1,11 +1,11 @@
 import { SearchState } from "@/pages/SearchPage";
-import { Shop, ShopSearchResponse } from "@/types";
+import { Product, ShopSearchResponse } from "@/types";
 import { useQuery } from "react-query";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useGetShop = (shopId?: string) => {
-    const getShopByIdRequest = async (): Promise<Shop> => {
+    const getShopByIdRequest = async (): Promise<Product> => {
         const response = await fetch(
             `${API_BASE_URL}/api/shop/${shopId}`
         );

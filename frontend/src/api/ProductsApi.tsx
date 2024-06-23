@@ -6,17 +6,10 @@ import { toast } from "sonner";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useGetProduct = () => {
-    const { getAccessTokenSilently } = useAuth0();
 
     const getProductRequest = async (): Promise<Product> => {
-        const accessToken = await getAccessTokenSilently();
 
-        const response = await fetch(`${API_BASE_URL}/api/my/shop`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
+        const response = await fetch(`${API_BASE_URL}/api/my/shop`)
 
         if(!response.ok){
             throw new Error("Failed to get products from Database")

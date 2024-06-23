@@ -21,7 +21,8 @@ const AppRoutes = () => {
                 path="/" 
                 element={<Layout homePage>
                     <HomePage/>
-                </Layout>}/>
+                </Layout>}
+            />
 
             <Route path="auth-callback" element={<AuthCallbackPage/>}/>
 

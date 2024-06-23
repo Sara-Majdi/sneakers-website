@@ -1,7 +1,5 @@
 import { useGetProduct } from '@/api/ProductsApi';
 import { Product } from '@/types';
-import { HoverEffect } from "../components/ui/card-hover-effect";
-import { ShoppingCart } from 'lucide-react';
 import Counter from '@/components/Counter';
 import { useState } from 'react';
 

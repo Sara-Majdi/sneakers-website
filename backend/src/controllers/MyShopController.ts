@@ -20,8 +20,7 @@ import mongoose from "mongoose";
 const createProduct = async ( req: Request, res: Response) => {
     try {
         //finding 
-        console.log('Request reached createProduct function already')
-        console.log(req.body)
+        //console.log(req.body)
         const productCode = req.body.productCode
         
         const existingProduct = await Product.findOne({ productCode: productCode})
@@ -43,6 +42,11 @@ const createProduct = async ( req: Request, res: Response) => {
         res.status(500).json({ message: "Something went wrong in createProduct function"});
     }
 };
+
+const getAllProducts =  async ( req: Request, res: Response) => {
+    const allProducts = await Product.find().maxTimeMS(30000) // Set timeout to 30 seconds
+    res.json(allProducts); 
+}
 
 // const updateMyShop = async (req: Request, res: Response) => {
 //     try {
@@ -88,5 +92,6 @@ const uploadImage = async (file: Express.Multer.File) =>{
 export default {
     // getMyShop,
     createProduct,
+    getAllProducts,
     // updateMyShop,
 }

@@ -154,10 +154,14 @@ const KidsProductPage: React.FC = () => {
               
           )})}
 
-        //        
+               
         </div>
 
+        </div>
       
+
+
+      </div>
     
   )
   //

@@ -18,6 +18,19 @@ const KidsProductPage: React.FC = () => {
   const [filterTerm, setFilterTerm] = useState<FilterTerm>(undefined);
 
   
+  
+  const transformTag = (tag:string) => {
+    switch (tag) {
+      case 'newArrivals':
+        return 'New Arrivals';
+      case 'bestSelling':
+        return 'Best Selling';
+      case 'noTags':
+        return false; // Hide "No Tags"
+      default:
+        return `${tag}% OFF`;
+    }
+  };
   //
   
   //

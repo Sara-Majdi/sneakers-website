@@ -30,6 +30,9 @@ const WomenProductPage: React.FC = () => {
         return `${tag}% OFF`;
     }
   };
+  
+  // Filter products to only include those with productCategory "women"
+  const filteredProducts = Array.isArray(product) ? product.filter(shoe => shoe.productCategory === 'women') : [];
   //
   
   //

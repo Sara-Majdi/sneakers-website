@@ -13,7 +13,14 @@ const WomenProductPage: React.FC = () => {
   //console.log(product)
   
 
+  // State to track the hover state for each product
+  const [hoveredProduct, setHoveredProduct] = useState<{ [key: string]: boolean }>({});
+  const [filterTerm, setFilterTerm] = useState<FilterTerm>(undefined);
+
   
+  //
+  
+  //
 }
 
 export default WomenProductPage

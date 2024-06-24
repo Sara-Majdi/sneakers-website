@@ -5,6 +5,7 @@ export type User = {
     addressLine1: string;
     city: string;
     country: string;
+    isAdmin: false;
 };
 
 export type SizeStock = {
@@ -14,6 +15,7 @@ export type SizeStock = {
 };
 
 export type Product = {
+    _id: string;
     productName: string;
     productCode: string;
     productPrice: string;

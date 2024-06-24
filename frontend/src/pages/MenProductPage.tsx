@@ -3,6 +3,7 @@ import { Product } from '@/types';
 import Counter from '@/components/Counter';
 import { useState } from 'react';
 import FilteringDropdown from '@/components/FilteringDropdown';
+import { Link } from 'react-router-dom';
 
 
 type FilterTerm = string | undefined;
@@ -10,6 +11,7 @@ type FilterTerm = string | undefined;
 const MenProductPage: React.FC = () => {
   const { product } = useGetProduct(); //Retrieving All products from the DB 
   //console.log(product)
+  
 
   // State to track the hover state for each product
   const [hoveredProduct, setHoveredProduct] = useState<{ [key: string]: boolean }>({});
@@ -56,7 +58,10 @@ const MenProductPage: React.FC = () => {
       }
       
     })
-  }else {
+  } else if (filterTerm === "all") {
+    setFilterTerm(undefined)
+  } 
+  else {
 
     newlyFilteredProducts = filteredProducts
   }
@@ -76,7 +81,7 @@ const MenProductPage: React.FC = () => {
 
             return (
               <div>
-                <div key={shoe.productCode} className=' flex flex-col items-center rounded-lg border h-full border-gray-400 shadow-lg transition-all hover:shadow-2xl hover:scale-105'>
+                <Link to={`/products/${shoe._id}`}  key={shoe.productCode} className=' flex flex-col items-center rounded-lg border h-full border-gray-400 shadow-lg transition-all hover:shadow-2xl hover:scale-105'>
                   <div  className='border-b w-full items-center justify-center flex rounded-sm border-gray-300 relative' 
                     onMouseEnter={() => setHoveredProduct(prevState => ({ ...prevState, [shoe.productCode]: true }))} 
                     onMouseLeave={() => setHoveredProduct(prevState => ({ ...prevState, [shoe.productCode]: false }))}>
@@ -107,7 +112,7 @@ const MenProductPage: React.FC = () => {
                       <Counter />
                     </div>
                   </div>
-                </div>
+                </Link>
               </div>
               
           )})}

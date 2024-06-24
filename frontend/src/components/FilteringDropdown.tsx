@@ -64,6 +64,7 @@ const FilteringDropdown: React.FC<FilteringDropdownProps> = ({ filterTerm, setFi
                     <SelectItem value="PriceDescending" className="text-[22px] font-inter font-medium ">Price, High To Low</SelectItem>
                     <SelectItem value="dateAscending" className="text-[22px] font-inter font-medium ">Date, Old To New</SelectItem>
                     <SelectItem value="dateDescending" className="text-[22px] font-inter font-medium ">Date, New To Old</SelectItem>
+                    <SelectItem value="all" className="text-[22px] font-inter font-medium ">Show All</SelectItem>
                 </Select.Group>
 
                 </Select.Viewport>

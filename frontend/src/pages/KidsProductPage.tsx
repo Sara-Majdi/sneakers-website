@@ -12,6 +12,12 @@ const KidsProductPage: React.FC = () => {
   const { product } = useGetProduct(); //Retrieving All products from the DB 
   //console.log(product)
   
+  
+  // State to track the hover state for each product
+  const [hoveredProduct, setHoveredProduct] = useState<{ [key: string]: boolean }>({});
+  const [filterTerm, setFilterTerm] = useState<FilterTerm>(undefined);
+
+  
   //
   
   //

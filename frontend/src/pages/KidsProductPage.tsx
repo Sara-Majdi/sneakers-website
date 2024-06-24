@@ -110,8 +110,13 @@ const KidsProductPage: React.FC = () => {
               
           )})}
 
-          //
           
+          {filterTerm && newlyFilteredProducts?.map((shoe: Product) => {
+            const newTag = transformTag(shoe.productTags)
+            const offer  = typeof newTag === "string" ? parseInt(newTag, 10) : 0;
+
+            //
+            
   //
 }
 

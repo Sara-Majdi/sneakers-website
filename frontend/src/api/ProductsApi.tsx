@@ -1,35 +1,28 @@
-import { Shop } from "@/types";
+import { Product } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useGetMyShop = () => {
-    const { getAccessTokenSilently } = useAuth0();
+export const useGetProduct = () => {
 
-    const getMyShopRequest = async (): Promise<Shop> => {
-        const accessToken = await getAccessTokenSilently();
+    const getProductRequest = async (): Promise<Product> => {
 
-        const response = await fetch(`${API_BASE_URL}/api/my/shop`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
+        const response = await fetch(`${API_BASE_URL}/api/my/shop`)
 
         if(!response.ok){
-            throw new Error("Failed to get shop")
+            throw new Error("Failed to get products from Database")
         }
         return response.json();
     };
 
-    const { data: shop, isLoading } = useQuery(
-        "fetchMyShop", 
-        getMyShopRequest 
+    const { data: product, isLoading } = useQuery(
+        "fetchProduct", 
+        getProductRequest 
     );
 
-    return { shop, isLoading };
+    return { product, isLoading };
 };
 
 export const useCreateProduct = () => {
@@ -39,7 +32,7 @@ export const useCreateProduct = () => {
     //functionn is going to accept the formData
     const createProductRequest = async(
         productFormData: FormData
-    ):Promise<Shop[]> => {
+    ):Promise<Product[]> => {
         const accessToken = await getAccessTokenSilently();
         console.log('Form Data successfully reach here, fix the below response function')
         //console.log(productFormData)
@@ -86,7 +79,7 @@ export const useUpdateMyShop = () => {
 
     const updateShopRequest = async (
         shopFormData: FormData
-    ): Promise<Shop> => {
+    ): Promise<Product> => {
         const accessToken = await getAccessTokenSilently();
 
         const response = await fetch(`${API_BASE_URL}/api/my/shop`, {
@@ -112,7 +105,7 @@ export const useUpdateMyShop = () => {
     } = useMutation(updateShopRequest);
 
     if(isSuccess) {
-        toast.success("Shop Updated");
+        toast.success("Product Updated");
     }
 
     if (error) {

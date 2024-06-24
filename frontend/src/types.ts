@@ -5,6 +5,7 @@ export type User = {
     addressLine1: string;
     city: string;
     country: string;
+    isAdmin: false;
 };
 
 export type SizeStock = {
@@ -13,19 +14,21 @@ export type SizeStock = {
     stock: number;
 };
 
-export type Shop = {
+export type Product = {
     _id: string;
-    user: string;
-    shopName: string;
-    color: string;
-    price: number;
-    category: string[];
-    sizeStock: SizeStock[];
-    imageUrl: string;
+    productName: string;
+    productCode: string;
+    productPrice: string;
+    productStock: string;
+    productCategory: string;
+    productSizes: string[];
+    productDescription: string;
+    productTags: string;
+    productImages: string[];
 }
 
 export type ShopSearchResponse = {
-    data: Shop[];
+    data: Product[];
     pagination: {
         total: number;
         page: number;

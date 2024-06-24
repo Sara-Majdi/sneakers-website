@@ -22,7 +22,7 @@ const upload = multer();
 app.use(upload.none());
 
 //GET /api/my/shop
-// router.get("/", jwtCheck, jwtParse, MyShopController.getMyShop)
+router.get("/", MyShopController.getAllProducts)
 
 // /api/my/shop
 router.post(

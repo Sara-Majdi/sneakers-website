@@ -5,12 +5,12 @@ import { z } from "zod";
 import DetailsSection from "./DetailsSection";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
-import { Shop } from "@/types";
+import { Product } from "@/types";
 import { useEffect, useState } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
 import ProductImageSection from "./ProductImageSection";
 import { toast } from "sonner";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 //////////////////////////////// Using Zod to validate all the form inputs ////////////////////////////////
@@ -49,20 +49,19 @@ type ProductFormData = z.infer<typeof formSchema>
 
 // Creating Types for the AddProductsForm below
 type Props = {
-    shop?: Shop;
+    product?: Product;
     onSave: (shopFormData: FormData) => void;
     isLoading: boolean;
     redirectPath: string;
 }
 
 ///////////////////////////////// ADD PRODUCTS FORM /////////////////////////////////////
-const AddProductsForm = ({ onSave, isLoading, shop, redirectPath }: Props) => {
+const AddProductsForm = ({ onSave, isLoading, product, redirectPath }: Props) => {
     // Declaring states for category, product sizes and product tags
     const [selectedCategory, setSelectedCategory] = useState<string>('men');
     const [productSizes, setProductSizes] = useState<string[]>([]);
     const [productTag, setProductTag] = useState<string>('newArrivals');
     const [addedPhotos, setAddedPhotos] = useState<string[]>([]);
-    const [redirect, setRedirect] = useState<string>('');
     const navigate = useNavigate();
 
     useEffect(() => {

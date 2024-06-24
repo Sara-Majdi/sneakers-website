@@ -13,6 +13,7 @@ import OrderDetails from "./forms/manage-shop-form/OrderDetails";
 import MenProductPage from "./pages/MenProductPage";
 import WomenProductPage from "./pages/WomenProductPage";
 import KidsProductPage from "./pages/KidsProductPage";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
 
 const AppRoutes = () => {
     return (
@@ -21,7 +22,8 @@ const AppRoutes = () => {
                 path="/" 
                 element={<Layout homePage>
                     <HomePage/>
-                </Layout>}/>
+                </Layout>}
+            />
 
             <Route path="auth-callback" element={<AuthCallbackPage/>}/>
 
@@ -48,6 +50,15 @@ const AppRoutes = () => {
                 element={
                     <Layout homePage={false}>
                         <KidsProductPage />
+                    </Layout>
+                }
+            />
+
+            <Route 
+                path="/products/:id" 
+                element={
+                    <Layout homePage={false}>
+                        <ProductDetailsPage />
                     </Layout>
                 }
             />

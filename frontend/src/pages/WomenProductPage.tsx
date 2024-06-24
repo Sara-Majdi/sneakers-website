@@ -3,7 +3,7 @@ import { Product } from '@/types';
 import Counter from '@/components/Counter';
 import { useState } from 'react';
 import FilteringDropdown from '@/components/FilteringDropdown';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 
 type FilterTerm = string | undefined;
@@ -16,6 +16,9 @@ const WomenProductPage: React.FC = () => {
   // State to track the hover state for each product
   const [hoveredProduct, setHoveredProduct] = useState<{ [key: string]: boolean }>({});
   const [filterTerm, setFilterTerm] = useState<FilterTerm>(undefined);
+
+  const location = useLocation(); // Retrieving the path of the current page
+  const path = location.pathname
 
   
   const transformTag = (tag:string) => {
@@ -69,7 +72,7 @@ const WomenProductPage: React.FC = () => {
   
   return (
     <div>
-      <FilteringDropdown filterTerm={filterTerm} setFilterTerm={setFilterTerm} />
+      {path === "/womenProducts" && <FilteringDropdown filterTerm={filterTerm} setFilterTerm={setFilterTerm} />}
 
       <div className="container mx-auto flex-1 py-10">
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols- gap-6 '>

@@ -5,6 +5,8 @@ import { Product } from '@/types';
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 import MenProductPage from './MenProductPage';
+import WomenProductPage from './WomenProductPage';
+import KidsProductPage from './KidsProductPage';
 
 const ProductDetailsPage = () => {
     const { product } = useGetProduct(); //Retrieving All products from the DB 
@@ -84,12 +86,14 @@ const ProductDetailsPage = () => {
                 italic min-h-[50px] font-inter bg-violet2 py-4 text-white hover:text-black'>
                     YOU MAY ALSO LIKE
                 </h1>
-                <div className=''>
+
+
+                    
+                {productCategory === "men" && <MenProductPage />}
+                {productCategory === "women" && <WomenProductPage />}
+                {productCategory === "kids" && <KidsProductPage />}
                     
 
-                    {productCategory === "men" && <MenProductPage />}
-                    
-                </div>
             </div>
         ))}
         

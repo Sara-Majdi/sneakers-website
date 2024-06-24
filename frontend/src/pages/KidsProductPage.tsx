@@ -34,6 +34,32 @@ const KidsProductPage: React.FC = () => {
   
   // Filter products to only include those with productCategory "kids"
   const filteredProducts = Array.isArray(product) ? product.filter(shoe => shoe.productCategory === 'kids') : [];
+  
+  let newlyFilteredProducts: Product[] = []
+
+  if (filterTerm === "bestSelling") {
+    newlyFilteredProducts = filterProductsByTag(filteredProducts, filterTerm)
+  } else if (filterTerm === "newArrivals") {
+    newlyFilteredProducts = filterProductsByTag(filteredProducts, filterTerm)
+  } else if (filterTerm === "onSale"){
+    filteredProducts.filter(product => {
+      const offer =  parseInt(product.productTags, 10)
+      console.log(offer) 
+
+      if (offer){
+        newlyFilteredProducts = filteredProducts.filter(product => product.productTags === offer.toString()) 
+      }
+      
+    })
+  } else if (filterTerm === "all") {
+    setFilterTerm(undefined)
+  } 
+  else {
+
+    newlyFilteredProducts = filteredProducts
+  }
+
+
   //
   
   //

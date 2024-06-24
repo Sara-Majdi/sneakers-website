@@ -43,7 +43,12 @@ const ProductDetailsPage = () => {
                 
 
                 {/* Product Details */}
-                <div></div>
+                <div className='ml-4'>
+                    <h1 className='text-[32px] font-[600] italic min-h-[50px] font-inter'>{(shoe.productName).toUpperCase()}</h1>
+                    <p className='font-mono mt-2 text-[18px]' >SORA: {shoe.productCode}</p>
+                    
+                    <p className='font-inter font-semibold mt-6 text-3xl' >RM{(parseInt((shoe.productPrice), 10)).toFixed(2)}</p>
+                </div>
             </div>
         ))}
         

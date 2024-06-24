@@ -66,8 +66,19 @@ const WomenProductPage: React.FC = () => {
   }
 
 
-  //
   
+  return (
+    <div>
+      <FilteringDropdown filterTerm={filterTerm} setFilterTerm={setFilterTerm} />
+
+      <div className="container mx-auto flex-1 py-10">
+        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols- gap-6 '>
+          {!filterTerm && filteredProducts.map((shoe: Product) => {
+            const newTag = transformTag(shoe.productTags)
+            const offer  = typeof newTag === "string" ? parseInt(newTag, 10) : 0;
+
+            //
+            
   //
 }
 

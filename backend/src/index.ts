@@ -23,7 +23,7 @@ cloudinary.config({
 });
 
 const app = express();
-const port = 7000
+const port = 7001
 app.use(express.json());
 app.use(cors()); 
 

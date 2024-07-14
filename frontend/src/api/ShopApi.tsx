@@ -1,4 +1,4 @@
-import { SearchState } from "@/pages/SearchPage";
+       import { SearchState } from "@/pages/SearchPage";
 import { Product, ShopSearchResponse } from "@/types";
 import { useQuery } from "react-query";
 

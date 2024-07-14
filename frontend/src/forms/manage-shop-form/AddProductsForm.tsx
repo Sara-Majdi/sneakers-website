@@ -10,10 +10,12 @@ import { useEffect, useState } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
 import ProductImageSection from "./ProductImageSection";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 
 //////////////////////////////// Using Zod to validate all the form inputs ////////////////////////////////
+//////////////////////////////// Zod From Schema ////////////////////////////////
 const formSchema = z.object({
     productName: z.string({
         required_error: "Product Name is required",
@@ -31,7 +33,7 @@ const formSchema = z.object({
         invalid_type_error: "Must be a valid integer",
     }).int().min(10, { message: "Product Stock should be at least 10" }),
 
-    productCategory: z.array(z.string()).optional(),
+    productCategory: z.string().optional(),
 
     productSizes: z.array(z.string()).optional(),
 
@@ -39,9 +41,9 @@ const formSchema = z.object({
         required_error: "Product Description is required",
     }).min(100, { message: "Product Description should be at least 100 characters long" }),
 
-    productTags: z.array(z.string()).optional(),
+    productTags: z.string().optional(),
 
-    productImages: z.instanceof(File, { message: "Product Image is required" }).optional(),
+    productImages: z.array(z.string()).optional(),
 })
 
 // Creating types for FormSchema
@@ -49,7 +51,7 @@ type ProductFormData = z.infer<typeof formSchema>
 
 // Creating Types for the AddProductsForm below
 type Props = {
-    product?: Product;
+    product?: Product; // Update the type to an array of Product
     onSave: (shopFormData: FormData) => void;
     isLoading: boolean;
     redirectPath: string;
@@ -64,46 +66,55 @@ const AddProductsForm = ({ onSave, isLoading, product, redirectPath }: Props) =>
     const [addedPhotos, setAddedPhotos] = useState<string[]>([]);
     const navigate = useNavigate();
 
+    const location = useLocation(); // Retrieving the path of the current page
+    const path = location.pathname
+
+    const parts = path.split("/"); //Filtering the product id from the code
+    const id = parts[parts.length - 1]; 
+
+    // Filter products to only include those with this specific productID
+    const filteredProduct = Array.isArray(product) ? product.filter(shoe => shoe._id === id) : undefined;
+
+    useEffect(() => {
+        if (filteredProduct && filteredProduct.length > 0) {
+            setAddedPhotos(filteredProduct[0].productImages);
+        }
+    }, [filteredProduct]);
+
     useEffect(() => {
         if (redirectPath) {
             navigate('/admin/manageProducts');
         }
     }, [redirectPath, navigate]);
     
-    // console.log(selectedCategory)
-    // console.log(productSizes)
-    // console.log(productTag)
-    // console.log(addedPhotos)
+    // console.log("hi")
+    // console.log(product)
+    //console.log(filteredProduct[0])
 
+    
     // Passing the Validations Form Schema 
     const form = useForm<ProductFormData>({
         resolver: zodResolver(formSchema),
+        defaultValues: filteredProduct ? filteredProduct[0] : {}
     });
 
     // Used for updating Products
-    // useEffect(() =>{
-    //     if(!shop){
-    //         return;
-    //     }
+    useEffect(() => {
+        if (!filteredProduct || filteredProduct.length === 0) {
+            return;
+        }
 
-    //     const priceFormatted = parseInt(
-    //         (shop.price / 100).toFixed(2)//delete: dont need to 2dc decimal point
-    //     );
+        const updatedProduct = {
+            ...filteredProduct[0],
+            productPrice: filteredProduct[0].productPrice,
+            productStock: filteredProduct[0].productStock,
+        };
 
-    //     const sizeStockFormatted = shop.sizeStock.map((item)=> ({
-    //         ...item,
-    //         stock: parseInt((item.stock / 100).toFixed(2)),
-    //     }));
+        form.reset(updatedProduct);
 
-    //     const updatedShop = {
-    //         ...shop,
-    //         price: priceFormatted,
-    //         sizeStock: sizeStockFormatted,
-    //     };
+    }, [form, filteredProduct]);
 
-    //     form.reset(updatedShop);
-    // }, [form, shop]);
-
+    
     const onSubmit = (formDataJson: ProductFormData) => {
         // TODO - convert formDataJson to a new FormData object
         const formData= new FormData();
@@ -143,8 +154,7 @@ const AddProductsForm = ({ onSave, isLoading, product, redirectPath }: Props) =>
             formData.append(`productImages[${index}]`, photo);
         });
 
-        
-        //console.log('Form data:', Array.from(formData.entries()));
+
         onSave(formData);
     };
 
@@ -165,6 +175,7 @@ const AddProductsForm = ({ onSave, isLoading, product, redirectPath }: Props) =>
                             setProductSizes={setProductSizes}
                             productTag={productTag}
                             setProductTag={setProductTag}
+                            //product={product}
                         />
 
                         <ProductImageSection 

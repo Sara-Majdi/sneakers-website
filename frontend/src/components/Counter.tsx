@@ -2,8 +2,20 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
 
-export default function Counter() {
-  const [count, setCount] = React.useState(0);
+// Define the props type
+type CounterProps = {
+  quantity: number;
+  setQuantity?: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export default function Counter({ quantity, setQuantity }: CounterProps) {
+  const [count, setCount] = React.useState(quantity);
+  
+  React.useEffect(() => {
+    if (setQuantity) {
+      setQuantity(count);
+    }
+  }, [count, setQuantity]);
 
   return (
     <div className='flex h-[38px]'>                          

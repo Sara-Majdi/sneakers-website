@@ -2,26 +2,56 @@ import { useGetProduct } from '@/api/ProductsApi';
 import Counter from '@/components/Counter';
 import { Button } from '@/components/ui/button';
 import { Product } from '@/types';
-import React from 'react'
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { redirect, useLocation, useNavigate } from 'react-router-dom';
 import MenProductPage from './MenProductPage';
 import WomenProductPage from './WomenProductPage';
 import KidsProductPage from './KidsProductPage';
+import ShareSocialLinks from '@/components/ShareSocialLinks';
+import { toast } from 'sonner';
+import Swal from 'sweetalert2';
 
 const ProductDetailsPage = () => {
+    const [selectedSize, setSelectedSize] = useState('')
+    console.log(selectedSize)
+
     const { product } = useGetProduct(); //Retrieving All products from the DB 
 
+    const navigate = useNavigate();
     const location = useLocation(); // Retrieving the path of the current page
     const path = location.pathname
 
     const parts = path.split("/"); //Filtering the product id from the code
     const id = parts[parts.length - 1]; 
 
-  // Filter products to only include those with this specific productID
-  const filteredProduct = Array.isArray(product) ? product.filter(shoe => shoe._id === id) : [];
-  const productCategory = filteredProduct.length > 0 ? filteredProduct[0].productCategory : null; //Getting Product Category
+    // Filter products to only include those with this specific productID
+    const filteredProduct = Array.isArray(product) ? product.filter(shoe => shoe._id === id) : [];
+    const productCategory = filteredProduct.length > 0 ? filteredProduct[0].productCategory : null; //Getting Product Category
 
+    useEffect(() => {
+        // Scroll to top when the component mounts
+        window.scrollTo(0, 0);
+    }, []);
 
+    
+    const redirectToPayment = () => {
+        if(selectedSize){
+            navigate(`/user-profile/${id}`)
+        } 
+        else {
+            toast.error('Select a Size first.');
+        }
+    }
+
+    const displayOutOfStockMessage = () => {
+
+        toast.error('Sorry, the selected shoes are currently out of stock. Please check back later for availability. Any inconvenience cause is regretted');
+        Swal.fire({
+            title: "Sorry",
+            text: "Sorry, the selected shoes are currently out of stock. Please check back later for availability. Any inconvenience cause is regretted",
+            icon: "error"
+          });
+    }
 
   return (
     <div  className="">
@@ -55,29 +85,50 @@ const ProductDetailsPage = () => {
                         <h1 className='text-[32px] font-[600] italic min-h-[50px] font-inter'>{(shoe.productName).toUpperCase()}</h1>
                         <p className='font-mono mt-1 text-[18px]' >SKU: {shoe.productCode}</p>
                         
-                        <p className='font-inter font-semibold my-8 text-3xl' >RM {(parseInt((shoe.productPrice), 10)).toFixed(2)}</p>
+                        <div className='my-8 flex justify-between items-center h-[50px]'>
+                            <p className='font-inter font-semibold text-4xl' >RM {(parseInt((shoe.productPrice), 10)).toFixed(2)}</p>
+
+                            <ShareSocialLinks />
+                        </div>
+                        
                         
                         <h1 className='font-mono font-medium text-[18px] mb-2'>CHOOSE YOUR SIZE:</h1>
                         <div className='grid grid-cols-3 gap-2' >
                             {shoe.productSizes.map((size) => (
-                                <Button className='border-[4px] border-black py-5 text-center rounded-none font-bold text-[16px] hover:bg-violet2 transition-all'>
-                                    <h1 className='text-[16px]'>{size}</h1>
+                                <Button onClick={() => {setSelectedSize(size)}}
+                                className={`border-[4px] border-black py-5 text-center rounded-none font-bold text-[16px] hover:bg-violet2 transition-all ${selectedSize == size ? "bg-violet2" : "bg-[#0F172A]"}`}>
+                                    {size}
                                 </Button>
                             ))}
                         </div>
 
                         <h1 className='min-h-[50px] font-inter my-12 leading-7'>{shoe.productDescription}</h1>
-
+                        
+                        {Number(shoe.productStock) < 11 && Number(shoe.productStock) > 0 ? (
+                            <h1 className='font-inter my-5 text-red-400 text-xl font-medium italic animate-bounce'>
+                                Act fast! Only {shoe.productStock} pairs of these stylish shoes left in stock. Grab yours before they're gone!
+                            </h1>
+                        ) :
+                        (
+                            <h1></h1>
+                        ) }
 
                         <div className='flex justify-between items-end' >
                             <div>
                                 <h1 className='font-mono font-medium text-[18px] mb-2'>QUANTITY:</h1>
-                                <Counter />
+                                <Counter quantity={0} />
                             </div>
 
-                            <Button className='border-[4px] border-black bg-violet2 py-7 px-24 text-center rounded-full font-inter font-bold text-[16px] hover:bg-black transition-all'>
-                                <h1 className='text-[22px]'>Add To Cart</h1>
-                            </Button>
+                            {Number(shoe.productStock) <= 0 ? (
+                                <Button onClick={displayOutOfStockMessage} className='border-[4px] border-black bg-red-500 py-7 px-20 text-center italic rounded-full font-inter font-bold text-[16px] hover:bg-red-700 transition-all'>
+                                    <h1 className='text-[22px]'>OUT OF STOCK</h1>
+                                </Button>
+                            ) :
+                            (
+                                <Button onClick={redirectToPayment} className='border-[4px] border-black bg-violet2 py-7 px-24 text-center rounded-full font-inter font-bold text-[16px] hover:bg-black transition-all'>
+                                    <h1 className='text-[22px]'>Buy Now</h1>
+                                </Button>
+                            ) }
                         </div>
                     </div>
                 </div>

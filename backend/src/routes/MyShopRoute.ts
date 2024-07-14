@@ -35,6 +35,8 @@ router.post(
     MyShopController.createProduct
 );
 
+router.delete('/products/:productId', MyShopController.deleteProduct);
+
 // router.put(
 //     "/", 
 //     upload.array("imageFile", 5), 

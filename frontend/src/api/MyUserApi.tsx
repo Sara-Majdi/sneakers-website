@@ -1,6 +1,7 @@
 import { User } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQuery } from "react-query";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -127,8 +128,18 @@ export const useUpdateMyUser = () => {
         reset, 
     } = useMutation(updateMyUserRequest);
 
+    const navigate = useNavigate();
+    const location = useLocation(); // Retrieving the path of the current page
+    const path = location.pathname
+    const parts = path.split("/"); //Filtering the product id from the code
+    const id = parts[parts.length - 1]; 
+
     if(isSuccess){
+
         toast.success("User profile updated!");
+        if (path.includes(id)){
+            navigate(`/products/checkout/${id}`)
+        } 
     }
 
     if(error) {

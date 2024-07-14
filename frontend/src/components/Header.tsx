@@ -12,7 +12,7 @@ const Header = () => {
             <div className="container mx-auto flex justify-between items-center">
                 <Link 
                     to="/" 
-                    className="text-2xl font-bold tracking-tight font-inter"
+                    className="text-2xl font-bold tracking-tight font-inter "
                 >
                     SoRa Sneakers
                 </Link>

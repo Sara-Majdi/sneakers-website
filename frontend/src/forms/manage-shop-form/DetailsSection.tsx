@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ChangeEvent, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ProductImageSection from "./ProductImageSection";
+import { Product } from "@/types";
 
 
 // Define interfaces for the props
@@ -16,10 +17,12 @@ interface DetailsSectionProps {
     setProductSizes: React.Dispatch<React.SetStateAction<string[]>>;
     productTag: string;
     setProductTag: React.Dispatch<React.SetStateAction<string>>;
+    product?: Product;
 }
 
 
 const DetailsSection: React.FC<DetailsSectionProps> = ({
+    product,
     selectedCategory,
     setSelectedCategory,
     productSizes,

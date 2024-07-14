@@ -18,13 +18,14 @@ export type Product = {
     _id: string;
     productName: string;
     productCode: string;
-    productPrice: string;
-    productStock: string;
+    productPrice: number;
+    productStock: number;
     productCategory: string;
     productSizes: string[];
     productDescription: string;
     productTags: string;
     productImages: string[];
+    productCreatedAt: string;
 }
 
 export type ShopSearchResponse = {

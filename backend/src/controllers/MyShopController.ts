@@ -48,6 +48,31 @@ const getAllProducts =  async ( req: Request, res: Response) => {
     res.json(allProducts); 
 }
 
+const deleteProduct = async (req: Request, res: Response) => {
+    try {
+        const { productId } = req.params;
+        console.log(productId)
+
+        // Check if the product ID is valid
+        if (!mongoose.Types.ObjectId.isValid(productId)) {
+            return res.status(400).json({ message: "Invalid Product ID" });
+        }
+
+        // Find and delete the product by its ID
+        const product = await Product.findByIdAndDelete(productId);
+
+        // Check if the product was found and deleted
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        res.status(200).json({ message: "Product deleted successfully" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong in deleteProduct function" });
+    }
+};
+
 // const updateMyShop = async (req: Request, res: Response) => {
 //     try {
 //         const shop = await Shop.findOne({
@@ -93,5 +118,6 @@ export default {
     // getMyShop,
     createProduct,
     getAllProducts,
+    deleteProduct,
     // updateMyShop,
 }

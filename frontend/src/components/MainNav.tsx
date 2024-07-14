@@ -12,10 +12,10 @@ const MainNav = () => {
             ) : (
             <Button
                 variant="ghost"
-                className="font-bold hover:text-orange-500 hover:bg-white"
+                className="font-bold font-inter hover:text-violet3 bg-violet2 text-white py-5 hover:bg-black"
                 onClick={async () => await loginWithRedirect()}
             >
-            Log In
+            Login
             </Button>
         )}
         </span>

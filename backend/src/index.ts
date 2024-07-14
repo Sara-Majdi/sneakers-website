@@ -7,6 +7,7 @@ import { v2 as cloudinary } from "cloudinary";
 import MyShopController from "./controllers/MyShopController";
 import myShopRoute from "./routes/MyShopRoute";
 import shopRoute from "./routes/ShopRoute"
+import orderRoute from "./routes/OrderRoute"
 import multer from "multer";
 import fs from "fs"
 import path from "path"
@@ -23,7 +24,7 @@ cloudinary.config({
 });
 
 const app = express();
-const port = 7001
+const port = 7000
 app.use(express.json());
 app.use(cors()); 
 
@@ -38,6 +39,7 @@ app.get("/health", async (req: Request, res: Response) => {
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/shop", myShopRoute);
 app.use("/api/shop", shopRoute);
+app.use("/api/order", orderRoute);
 
 
 interface MulterRequest extends Request {

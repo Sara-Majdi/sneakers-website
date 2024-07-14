@@ -5,6 +5,7 @@ import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+//////////////// GET ALL PRODUCTS FROM DB FUNCTION ////////////////
 export const useGetProduct = () => {
 
     const getProductRequest = async (): Promise<Product> => {
@@ -25,11 +26,11 @@ export const useGetProduct = () => {
     return { product, isLoading };
 };
 
+//////////////// CREATE NEW PRODUCT FUNCTION ////////////////
 export const useCreateProduct = () => {
     const { getAccessTokenSilently } = useAuth0();
     
-
-    //functionn is going to accept the formData
+    //Function is going to accept the formData
     const createProductRequest = async(
         productFormData: FormData
     ):Promise<Product[]> => {
@@ -74,6 +75,7 @@ export const useCreateProduct = () => {
     return { createProduct, isLoading, redirectPath };
 };
 
+//////////////// UPDATE PRODUCT DETAILS FUNCTION ////////////////
 export const useUpdateMyShop = () => {
     const { getAccessTokenSilently } = useAuth0();
 
@@ -90,8 +92,9 @@ export const useUpdateMyShop = () => {
             body: shopFormData,
         });
 
-        if(!response){
-            throw new Error("Failed to update shop");
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`Failed to update shop: ${errorMessage}`);
         }
 
         return response.json();
@@ -104,14 +107,17 @@ export const useUpdateMyShop = () => {
         isSuccess,
     } = useMutation(updateShopRequest);
 
-    if(isSuccess) {
+    if (isSuccess) {
         toast.success("Product Updated");
     }
 
     if (error) {
         toast.error("Unable to update shop");
+        console.error("Update shop error:", error);
     }
 
     return {
-        updateShop, isLoading };
+        updateShop,
+        isLoading,
+    };
 };

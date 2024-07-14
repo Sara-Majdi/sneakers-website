@@ -8,6 +8,8 @@ const ManageShopPage = () => {
 
     const isEditing = !!product;
 
+    
+
     return  (
         <AddProductsForm 
           product={product} 

@@ -1,5 +1,6 @@
 import AsSeenOnSection from "@/components/AsSeenOnSection";
 import BannerCategory from "@/components/BannerCategory";
+import EmailSection from "@/components/EmailSection";
 import FAQ from "@/components/FAQ";
 import FilteringDropdown from "@/components/FilteringDropdown";
 import Footer from "@/components/Footer";
@@ -30,7 +31,7 @@ const Layout = ({children, homePage = false, adminPage = false,}: Props) => {
             
             {/* Customer View */}
             {!adminPage ? 
-                <div>
+                <div className="flex-1 flex flex-col">
                     <Header />
                     <NavbarPromoMessage />
                     {/* If homePage == true, display Hero section*/}
@@ -39,8 +40,9 @@ const Layout = ({children, homePage = false, adminPage = false,}: Props) => {
                     {homePage &&  <BannerCategory />} 
                     {/* {homePage &&  <AsSeenOnSection />}  */}
 
-                    <div >{children}</div>
+                    <div className="flex-1">{children}</div>
                     {homePage &&  <FAQ />} 
+                    {homePage &&  <EmailSection />} 
                     <Footer />
                 </div>
                 

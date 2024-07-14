@@ -14,6 +14,8 @@ import MenProductPage from "./pages/MenProductPage";
 import WomenProductPage from "./pages/WomenProductPage";
 import KidsProductPage from "./pages/KidsProductPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import UpdateProductDetails from "./forms/manage-shop-form/UpdateProductDetails";
+import PaymentPage from "./pages/PaymentPage";
 
 const AppRoutes = () => {
     return (
@@ -85,7 +87,23 @@ const AppRoutes = () => {
 
             <Route element={<ProtectedRoute/>}>
                 <Route 
+                    path="/products/checkout/:id" 
+                    element={
+                        <Layout>
+                            <PaymentPage />
+                        </Layout>
+                    }
+                />
+                <Route 
                     path="/user-profile" 
+                    element={
+                        <Layout>
+                            <UserProfilePage/>
+                        </Layout>
+                    }
+                />
+                <Route 
+                    path="/user-profile/:productID" 
                     element={
                         <Layout>
                             <UserProfilePage/>
@@ -109,18 +127,18 @@ const AppRoutes = () => {
                     }
                 />
                 <Route 
-                    path="/admin/addProducts" 
-                    element={
-                        <Layout adminPage={true} >
-                            <ManageShopPage />
-                        </Layout>
-                    }
-                />
-                <Route 
                     path="/admin/manageProducts" 
                     element={
                         <Layout adminPage={true} >
                             <ManageProductsForm />
+                        </Layout>
+                    }
+                />
+                <Route 
+                    path="/admin/manageProducts/update/:id" 
+                    element={
+                        <Layout adminPage={true} >
+                            <ManageShopPage />
                         </Layout>
                     }
                 />

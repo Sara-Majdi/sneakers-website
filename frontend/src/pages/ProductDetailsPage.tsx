@@ -95,7 +95,7 @@ const ProductDetailsPage = () => {
                         <p className='font-mono mt-1 text-[18px]' >SKU: {shoe.productCode}</p>
                         
                         <div className='my-8 flex justify-between items-center h-[50px]'>
-                            <p className='font-inter font-semibold text-4xl' >RM {(parseInt((shoe.productPrice), 10)).toFixed(2)}</p>
+                            <p className='font-inter font-semibold text-4xl' >RM {Number(shoe.productPrice).toFixed(2)}</p>
 
                             <ShareSocialLinks />
                         </div>

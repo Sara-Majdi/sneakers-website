@@ -8,7 +8,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 type FilterTerm = string | undefined;
 
-const MenProductPage: React.FC = () => {
+const KidsProductPage: React.FC = () => {
   
   // State to track the hover state for each product
   const [hoveredProduct, setHoveredProduct] = useState<{ [key: string]: boolean }>({});
@@ -159,13 +159,13 @@ const MenProductPage: React.FC = () => {
                     <div className='flex justify-between h-full items-end'>
                       {offer > 0 ? (
                         <div className=''>
-                          <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full  px-6 py- text-center line-through italic'>RM {shoe.productPrice}</p>
+                          <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full  px-6 py- text-center line-through italic'>RM {Number(shoe.productPrice).toFixed(2)}</p>
                           <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full bg-green-100 px-6 py-2 text-green-60'>RM {(Number(shoe.productPrice) - (Number(shoe.productPrice) * offer/100 )).toFixed(2)}</p>
                              
                         </div>
                       )
                       : (
-                        <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full bg-green-100 px-6 py-2 text-green-60'>RM {shoe.productPrice}</p>
+                        <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full bg-green-100 px-6 py-2 text-green-60'>RM {Number(shoe.productPrice).toFixed(2)}</p>
                       )
                     }
 
@@ -203,13 +203,13 @@ const MenProductPage: React.FC = () => {
                     <div className='flex justify-between h-full items-end'>
                       {offer > 0 ? (
                         <div className=''>
-                          <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full  px-6 py- text-center line-through italic'>RM {shoe.productPrice}</p>
+                          <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full  px-6 py- text-center line-through italic'>RM {Number(shoe.productPrice).toFixed(2)}</p>
                           <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full bg-green-100 px-6 py-2 text-green-60'>RM {(Number(shoe.productPrice) * offer/100 ).toFixed(2)}</p>
                             
                         </div>
                       )
                       : (
-                        <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full bg-green-100 px-6 py-2 text-green-60'>RM {shoe.productPrice}</p>
+                        <p className='text-nowrap h-fit font-extrabold text-[20px] rounded-full bg-green-100 px-6 py-2 text-green-60'>RM {Number(shoe.productPrice).toFixed(2)}</p>
                       )
                     }
 
@@ -234,4 +234,4 @@ const MenProductPage: React.FC = () => {
   )
 }
 
-export default MenProductPage
+export default KidsProductPage

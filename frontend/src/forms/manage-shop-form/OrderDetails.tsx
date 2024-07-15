@@ -65,7 +65,7 @@ const OrderDetails = () => {
             {/* <TableCaption className='text-xl '>List Of Your Added Products</TableCaption> */}
             <TableHeader className='border-y-2 '>
               <TableRow className='font-extrabold'>
-                <TableHead className="w-[260px] font-extrabold text-[17px]">Order ID</TableHead>
+                <TableHead className="w-[200px] font-extrabold text-[17px]">Order ID</TableHead>
                 <TableHead className="w-[260px] font-extrabold text-[17px]">Product Name</TableHead>
                 <TableHead className="w-[150px] font-extrabold text-[17px] py-4 text-center">Buyer Name</TableHead>
                 <TableHead className="w-[150px] font-extrabold text-[17px] py-4 text-center">Date</TableHead>
@@ -76,7 +76,7 @@ const OrderDetails = () => {
               
                 {Array.isArray(orders) && orders?.length > 0 && orders?.filter(searchFilter).map((order) =>  (
                   <TableRow key={order._id} className='text-[16px] font-inter '>
-                    <TableCell className="font-medium text-violet2 py-5 pr-4">{order._id}</TableCell>
+                    <TableCell className="font-medium text-violet2 py-5 pr-">{order._id}</TableCell>
                     <TableCell className="font-medium py-5 pr-6">{order.product?.productName}</TableCell>
                     <TableCell className="font-medium py-5 pr-4 text-center">{order.user?.name}</TableCell>
                     <TableCell className="font-medium py-5 pr-4 text-center">{formatDate(order.orderCreatedAt)}</TableCell>

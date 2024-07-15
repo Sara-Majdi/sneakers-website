@@ -14,25 +14,24 @@ export default function AdminSidebar() {
   return (
     <div className='relative'>
       <div className='w-[350px] border fixed top-0 left-0 h-full flex flex-col'>
-        <h1 className="text-3xl font-bold tracking-tight font-inter text-center my-4">
+        <Link to={"/"} className="text-3xl font-bold tracking-tight font-inter text-center my-4">
           SoRa Sneakers
-        </h1>
+        </Link>
 
         <Divider />
 
         <div className='flex-grow overflow-auto'>
           <Link to="/admin/manageHomePage" 
-          className={`flex justify-center items-center my-4 gap-3 mx-6 py-4 
+          className={`flex justify-center items-center my-4 gap-3 mx-6 py-4 hidden
           rounded-md hover:bg-violet2 hover:text-white ${path == "/admin/manageHomePage" ? "bg-violet2 hover:bg-violet3 text-white" : ""}`}>
             <Home width={36} height={36} />
             <p className='text-2xl font-inter font-semibold '>Home Page Details</p>
           </Link>
 
-          <Link to="/admin/addProducts" 
-          className={`flex justify-center items-center my-4 gap-3 
-          mx-6 py-4 rounded-md hover:bg-violet2 hover:text-white ${path == "/admin/addProducts" ? "bg-violet2 hover:bg-violet3 text-white" : ""}`}>
-            <BadgePlus width={36} height={36} className='-ml-[70px]' />
-            <p className='text-2xl font-inter font-semibold '>Add Product</p>
+          <Link to="/admin/orderDetails"  className={`flex justify-center items-center my-4 gap-3 mx-6 py-4 
+          rounded-md hover:bg-violet2 hover:text-white ${path == "/admin/orderDetails" ? "bg-violet2 hover:bg-violet3 text-white" : ""}`}>
+            <CircleDollarSign width={36} height={36} className='-ml-[63px]' />
+            <p className='text-2xl font-inter font-semibold '>Order Details</p>
           </Link>
 
           <Link to="/admin/manageProducts"  className={`flex justify-center items-center my-4 gap-3 mx-6 py-4 
@@ -41,10 +40,11 @@ export default function AdminSidebar() {
             <p className='text-2xl font-inter font-semibold '>Product Details</p>
           </Link>
 
-          <Link to="/admin/orderDetails"  className={`flex justify-center items-center my-4 gap-3 mx-6 py-4 
-          rounded-md hover:bg-violet2 hover:text-white ${path == "/admin/orderDetails" ? "bg-violet2 hover:bg-violet3 text-white" : ""}`}>
-            <CircleDollarSign width={36} height={36} className='-ml-[63px]' />
-            <p className='text-2xl font-inter font-semibold '>Order Details</p>
+          <Link to="/admin/addProducts" 
+          className={`flex justify-center items-center my-4 gap-3 
+          mx-6 py-4 rounded-md hover:bg-violet2 hover:text-white ${path == "/admin/addProducts" ? "bg-violet2 hover:bg-violet3 text-white" : ""}`}>
+            <BadgePlus width={36} height={36} className='-ml-[70px]' />
+            <p className='text-2xl font-inter font-semibold '>Add Product</p>
           </Link>
         </div>
 

@@ -15,7 +15,7 @@ const UsernameMenu = () => {
     return(
 
         <DropdownMenu>
-            <ShoppingCart className="width-21 w-8 h-8 hover:text-violet"/>
+            <ShoppingCart className="width-21 w-8 h-8 hover:text-violet hidden"/>
             <DropdownMenuTrigger className="flex items-center px-3 font-bold hover:text-violet gap-4">
                 
                 <CircleUserRound className="width-21 w-8 h-8"/>
@@ -26,7 +26,7 @@ const UsernameMenu = () => {
                 {currentUser?.isAdmin &&
                     <DropdownMenuItem>
                         <Link  
-                            to="/admin/manageHomePage" 
+                            to="/admin/orderDetails" 
                             className="font-bold hover:text-violet3">
                             Admin
                         </Link>

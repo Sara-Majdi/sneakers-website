@@ -13,6 +13,8 @@ import Swal from 'sweetalert2';
 
 const ProductDetailsPage = () => {
     const [selectedSize, setSelectedSize] = useState('')
+    const [selectedImg, setSelectedImg] = useState(0)
+    
     console.log(selectedSize)
 
     const { product } = useGetProduct(); //Retrieving All products from the DB 
@@ -55,17 +57,24 @@ const ProductDetailsPage = () => {
 
   return (
     <div  className="">
-        {filteredProduct.map((shoe: Product) => (
+        {filteredProduct.map((shoe: Product) => {
+            // let imgSrc = `http://localhost:7000/uploads/${shoe.productImages[index]}`
+            return (
             <div className=''>
                 <div className='grid grid-cols-[10%_50%_40%] container mx-auto flex-1 py-10' >
                     {/* Small Images Rows */}
                     <div className='flex flex-col'>
                         <div className=''>
-                            {shoe.productImages.map((img) => (
-                                <img 
-                                src={`http://localhost:7000/uploads/${img}`}
-                                height={20} width={320} alt="" className='border border-gray-400' /> 
-                            ))}
+                            {shoe.productImages.map((img, index) => {
+                                let imgSrc = `http://localhost:7000/uploads/${shoe.productImages[index]}`  
+
+                                return (
+                                <img onClick={() => setSelectedImg(index)}
+                                src={imgSrc}
+                                height={20} width={320} alt="All Product Images" 
+                                className={`border 
+                                    ${imgSrc == `http://localhost:7000/uploads/${shoe.productImages[selectedImg]}` ? "border border-2 border-black shadow-2xl" : " border-gray-400 "} `} /> 
+                            )})}
 
                         </div>
                     
@@ -74,7 +83,7 @@ const ProductDetailsPage = () => {
                     {/* Large Images Box */}
                     <div className='px' >
                         <img 
-                        src={`http://localhost:7000/uploads/${shoe.productImages[0]}`}
+                        src={`http://localhost:7000/uploads/${shoe.productImages[selectedImg]}`}
                         height={60} width={670} alt="" className='object-cover' />
 
                     </div>
@@ -146,7 +155,7 @@ const ProductDetailsPage = () => {
                     
 
             </div>
-        ))}
+        )})}
         
     </div>
   )

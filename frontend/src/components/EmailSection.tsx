@@ -5,11 +5,13 @@ const EmailSection = () => {
         event.preventDefault();
         const formData = new FormData(event.target);
     
+        /* Collects and formats the form data as JSON */
         formData.append("access_key", "068be0d2-a529-4e9e-be52-1d0fa797a21a");
     
         const object = Object.fromEntries(formData);
         const json = JSON.stringify(object);
     
+        /* send the data to web API, to handle the submission */
         const res = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: {
@@ -19,6 +21,7 @@ const EmailSection = () => {
           body: json
         }).then((res) => res.json());
     
+        /* if submission is succesfull, it shows a succes alert to user */
         if (res.success) {
             Swal.fire({
                 title: "Success!",

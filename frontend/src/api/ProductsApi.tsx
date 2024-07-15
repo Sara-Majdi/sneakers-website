@@ -1,6 +1,7 @@
 import { Product } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQuery } from "react-query";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -35,9 +36,11 @@ export const useCreateProduct = () => {
         productFormData: FormData
     ):Promise<Product[]> => {
         const accessToken = await getAccessTokenSilently();
-        console.log('Form Data successfully reach here, fix the below response function')
-        //console.log(productFormData)
-        console.log('Form data:', Array.from(productFormData.entries()));
+        
+        // console.log('Form Data successfully reach here, fix the below response function')
+        // console.log(productFormData)
+        // console.log('Form data:', Array.from(productFormData.entries()));
+        
         const response = await fetch(`${API_BASE_URL}/api/my/shop`,{
             method: "POST",
             headers: {
@@ -76,20 +79,26 @@ export const useCreateProduct = () => {
 };
 
 //////////////// UPDATE PRODUCT DETAILS FUNCTION ////////////////
-export const useUpdateMyShop = () => {
+export const useUpdateProduct = () => {
     const { getAccessTokenSilently } = useAuth0();
 
-    const updateShopRequest = async (
-        shopFormData: FormData
+    const location = useLocation(); // Retrieving the path of the current page
+    const path = location.pathname
+
+    const parts = path.split("/"); //Filtering the product id from the code
+    const id = parts[parts.length - 1]; 
+
+    const updateProductRequest = async (
+        productFormData: FormData
     ): Promise<Product> => {
         const accessToken = await getAccessTokenSilently();
 
-        const response = await fetch(`${API_BASE_URL}/api/my/shop`, {
+        const response = await fetch(`${API_BASE_URL}/api/my/shop/update/${id}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
-            body: shopFormData,
+            body: productFormData,
         });
 
         if (!response.ok) {
@@ -105,19 +114,23 @@ export const useUpdateMyShop = () => {
         isLoading,
         error,
         isSuccess,
-    } = useMutation(updateShopRequest);
+    } = useMutation(updateProductRequest);
 
+    const navigate = useNavigate();
     if (isSuccess) {
-        toast.success("Product Updated");
+        toast.success("Product Updated Successfully");
+        navigate("/admin/manageProducts")
+
     }
 
     if (error) {
-        toast.error("Unable to update shop");
-        console.error("Update shop error:", error);
+        toast.error("Unable To Update Product");
+        console.error("Update product error:", error);
     }
 
     return {
         updateShop,
         isLoading,
+        
     };
 };

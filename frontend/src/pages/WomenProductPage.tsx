@@ -60,8 +60,8 @@ const MenProductPage: React.FC = () => {
   const sortProductsByPrice = (products: Product[], ascending: boolean): Product[] => {
     return products.sort((a, b) => { //Comparing 2 products
       return ascending
-        ? parseFloat(a.productPrice) - parseFloat(b.productPrice) // -1 means before, 1 means after
-        : parseFloat(b.productPrice) - parseFloat(a.productPrice);
+        ? a.productPrice - b.productPrice // -1 means before, 1 means after
+        : b.productPrice - a.productPrice;
     });
   };
 
@@ -148,7 +148,7 @@ const MenProductPage: React.FC = () => {
                     onMouseLeave={() => setHoveredProduct(prevState => ({ ...prevState, [shoe.productCode]: false }))}>
                         <img 
                         src={`http://localhost:7000/uploads/${hoveredProduct[shoe.productCode] ? shoe.productImages[1] : shoe.productImages[0]}`}
-                        height={20} width={320} alt="" className='' />
+                        height={20} width={320} alt="" className='min-h-[320px]' />
 
                         <p className={`absolute italic top-4 right-4 text-nowrap h-fit font-semibold text-[18px] rounded-full text-white px-6 py-2 text-green-60 ${newTag ? "bg-[#836FFF]" : ""} `}>{newTag}</p>
                   </div>

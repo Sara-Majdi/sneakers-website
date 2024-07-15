@@ -17,6 +17,7 @@ import mongoose from "mongoose";
 //     }
 // }
 
+//Create A New Product in DB
 const createProduct = async ( req: Request, res: Response) => {
     try {
         //finding 
@@ -43,11 +44,14 @@ const createProduct = async ( req: Request, res: Response) => {
     }
 };
 
+
+//Get All Added Products in DB
 const getAllProducts =  async ( req: Request, res: Response) => {
     const allProducts = await Product.find().maxTimeMS(30000) // Set timeout to 30 seconds
     res.json(allProducts); 
 }
 
+//Delete A Product in DB by its ID
 const deleteProduct = async (req: Request, res: Response) => {
     try {
         const { productId } = req.params;
@@ -73,36 +77,40 @@ const deleteProduct = async (req: Request, res: Response) => {
     }
 };
 
-// const updateMyShop = async (req: Request, res: Response) => {
-//     try {
-//         const shop = await Shop.findOne({
-//             user: req.userId,
-//         });
 
-//         if(!shop) {
-//             return res.status(404).json({ message: "shop not found"});
-//         }
+//Update A Product in DB by its ID
+const updateProduct = async (req: Request, res: Response) => {
+    try {
+        // console.log(req.body)
+        // console.log(req.params)
+        const { productId } = req.params;
 
-//         shop.shopName = req.body.shopName;
-//         shop.color = req.body.color;
-//         shop.price = req.body.price;
-//         shop.category = req.body.category;
-//         shop.sizeStock = req.body.sizeStock;
-//         shop.lastUpdated = new Date();
+        const product = await Product.findOne({ _id: productId})
+        // console.log(product)
 
-//         if(req.file) {
-//             const imageArray = await uploadImage(req.file as Express.Multer.File);
-//             //shop.imageArray = imageArray;
-//         }
+        if(!product) {
+            return res.status(404).json({ message: "product not found"});
+        }
 
-//         await shop.save();
-//         res.status(200).send(shop);
+        product.productName = req.body.productName;
+        product.productCode = req.body.productCode;
+        product.productPrice = req.body.productPrice;
+        product.productStock = req.body.productStock;
+        product.productCategory = req.body.productCategory;
+        product.productSizes = req.body.productSizes;
+        product.productDescription = req.body.productDescription;
+        product.productTags = req.body.productTags;
+        product.productImages = req.body.productImages;
 
-//     } catch(error) {
-//         console.log("error", error);
-//         res.status(500).json
-//     }
-// }
+
+        await product.save();
+        res.status(200).send(product);
+
+    } catch(error) {
+        console.log("error", error);
+        res.status(500).json
+    }
+}
 
 const uploadImage = async (file: Express.Multer.File) =>{
     const image = file;
@@ -119,5 +127,5 @@ export default {
     createProduct,
     getAllProducts,
     deleteProduct,
-    // updateMyShop,
+    updateProduct,
 }

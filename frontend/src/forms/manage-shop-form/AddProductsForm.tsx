@@ -104,13 +104,7 @@ const AddProductsForm = ({ onSave, isLoading, product, redirectPath }: Props) =>
             return;
         }
 
-        const updatedProduct = {
-            ...filteredProduct[0],
-            productPrice: filteredProduct[0].productPrice,
-            productStock: filteredProduct[0].productStock,
-        };
-
-        form.reset(updatedProduct);
+    
 
     }, [form, filteredProduct]);
 
@@ -186,7 +180,7 @@ const AddProductsForm = ({ onSave, isLoading, product, redirectPath }: Props) =>
 
                         {isLoading ? <LoadingButton/> : 
                             <Button type="submit" className="bg-violet2 text-2xl p-8 hover:bg-black hover:text-violet2 font-bold w-full font-inter">
-                                Add Product
+                                {path == "/admin/addProducts" ? "Add Product" : "Update Product"}
                             </Button> 
                         }
                     </form>

@@ -69,7 +69,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
         <div className="space-y-12">
             <div className="flex flex-col gap-6 md:flex-row">
                 <FormField
-                    // control={form.control}
+                    control={control}
                     name="productName"
                     render={({ field }) => (
                         <FormItem className="w-full">
@@ -91,7 +91,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
                 />
 
                 <FormField
-                    // control={form.control}
+                    control={control}
                     name="productCode"
                     render={({ field }) => (
                         <FormItem className="w-full">
@@ -117,7 +117,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
             
             <div className="flex flex-col gap-6 md:flex-row">
                 <FormField
-                    // control={form.control}
+                    control={control}
                     name="productPrice"
                     render={({ field }) => (
                         <FormItem className="w-full">
@@ -140,7 +140,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
                 />
 
                 <FormField
-                    // control={form.control}
+                    control={control}
                     name="productStock"
                     render={({ field }) => (
                         <FormItem className="w-full">
@@ -166,7 +166,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
 
             <div className="flex flex-col gap-6 md:flex-row">
                 <FormField
-                    // control={form.control}
+                    control={control}
                     name="productCategory"
                     render={({ field }) => (
                         <FormItem className="w-full">
@@ -175,8 +175,8 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
                             <div className="grid grid-cols-2 md:grid-cols-3  gap-2">
                                 <label className="flex items-center p-4 border rounded-md gap-2 h-[50px] bg-white">
                                     <Checkbox
-                                        //onCheckedChange={field.onChange}
-                                        //checked={field.value} 
+                                        // onCheckedChange={field.onChange}
+                                        // checked={field.value} 
                                         checked={selectedCategory === 'men'}
                                         onCheckedChange={() => handleCategoryClick('men')}
                                         id="men" className="mr-2 h-5 w-5 border border-primary" />
@@ -225,7 +225,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
                 />
                 
                 <FormField
-                    // control={form.control}
+                    control={control}
                     name="productSizes"
                     render={({ field }) => (
                         <FormItem className="w-full">
@@ -249,7 +249,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
                                         <Checkbox name={size}
                                             onCheckedChange={() => handleSizeCheckbox(size)}
                                             checked={field.value}
-                                            id="men" className="mr-2 h-5 w-5 border border-primary " />
+                                            id="women" className="mr-2 h-5 w-5 border border-primary " />
 
                                         <p className="font-inter font-medium">{`${size}`}</p>
                                     </label>
@@ -260,7 +260,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
                                         <Checkbox name={size}
                                             onCheckedChange={() => handleSizeCheckbox(size)}
                                             checked={field.value}
-                                            id="men" className="mr-2 h-5 w-5 border border-primary " />
+                                            id="kids" className="mr-2 h-5 w-5 border border-primary " />
 
                                         <p className="font-inter font-medium">{`${size}`}</p>
                                     </label>
@@ -281,7 +281,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
 
             <div className="flex flex-col gap-6 md:flex-row">
                 <FormField
-                    // control={form.control}
+                    control={control}
                     name="productDescription"
                     render={({ field }) => (
                         <FormItem className="w-full">
@@ -308,7 +308,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({
                 />
 
                 <FormField
-                    // control={form.control}
+                    control={control}
                     name="productTags"
                     render={({ field }) => (
                         <FormItem className="w-full">

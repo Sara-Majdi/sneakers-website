@@ -24,7 +24,7 @@ app.use(upload.none());
 //GET /api/my/shop
 router.get("/", MyShopController.getAllProducts)
 
-// /api/my/shop
+//POST /api/my/shop
 router.post(
     "/", 
     upload.none(),
@@ -37,14 +37,15 @@ router.post(
 
 router.delete('/products/:productId', MyShopController.deleteProduct);
 
-// router.put(
-//     "/", 
-//     upload.array("imageFile", 5), 
-//     validateMyShopRequest,
-//     jwtCheck,
-//     jwtParse,
-//     MyShopController.updateMyShop
-// );
+router.put(
+    "/update/:productId", 
+    upload.none(),
+    // upload.array("imageFile", 5), 
+    // validateMyShopRequest,
+    jwtCheck,
+    jwtParse,
+    MyShopController.updateProduct
+);
 
 // const photosMiddleware = multer({dest: 'uploads/'});
 // app.post('/', photosMiddleware.array("photos", 5), (req, res) => {

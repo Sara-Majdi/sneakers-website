@@ -9,13 +9,7 @@ export default function AdminSidebar() {
   const { logout } = useAuth0();
   const location = useLocation();
   const path = location.pathname
-  //console.log(location.pathname); 
 
-  // const { createShop, isLoading: isCreateLoading } = useCreateMyShop();
-  // const { shop } = useGetMyShop();
-  // const {  updateShop, isLoading: isUpdateLoading } = useUpdateMyShop();
-
-  // const isEditing = !!shop;
 
   return (
     <div className='relative'>
